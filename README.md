@@ -5,15 +5,13 @@ In this lab, we will walk you through the steps of uplifting a sample Pytorch DL
 * Small footprint: Kind Kubernetes(1.32 or later) on a compute instance or VM, etc of 4GB memory and 20GB free disk space
 * A working Pytorch notebook on Google Colab or Jupyter.
 
-![Kubernetes inter-pod socketing](Namespace_socket_poc02.png)
-
 ### TL; DR
 
 ![Kubernetes inter-pod socketing](Namespace_socket_poc02.png)
 
-Sequence of the steps to go through
-1. Call system(3) to use the crictl CLI to retrieve the container ID and process ID $pid of the frontend pod.
-2. Open /proc/$pid/ns/net that represents the Linux network namespace of the frontend container process.
+Sequence of the steps to go through:
+1. Install Kubeflow Pipeline and Kubeflow Trainer V2
+2. Down a chosen Pytorch notebook as a pyton script
 3. Call setns(3) to set the Linux network namespace of the server temporarily to that of the frontend.
 4. Call socket() to create a socket listening on the frontend. From now on, any worker sockets arising to accept client requests from the listening socket will likewise reside in the frontend.
 5. Call setns(3) to return to the original Linux network namespace of the server.
