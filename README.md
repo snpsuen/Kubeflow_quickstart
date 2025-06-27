@@ -32,6 +32,8 @@ kubectl wait --for condition=established --timeout=60s crd/applications.app.k8s.
 kubectl apply -k "github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION"
 ```
 
+Heads up: When installing from the offical repo, the peristent volume claim is set to 20GB each for the mino and mysql pods on the Kubeflow Pipelines control plane.
+
 To be continued ...
 
 
