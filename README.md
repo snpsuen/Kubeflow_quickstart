@@ -1,12 +1,11 @@
-# Kubeflow Quickstart
+## Kubeflow Quickstart
 
 In this lab, we are going to walk you through the steps of uplifting a sample Pytorch DL notebook to a Kubeflow on a shoestring, so to speak:
 * Minimal Kubeflow ecosystem: Kubeflow Pipeline + Kubeflow Trainer V2
-* Small footprint: Kind Kubernetes on an compute instance, VM, etc of 4GB memory and 20GB free disk space
+* Small footprint: Kind Kubernetes(1.32 or later) on a VM or EC2, etc of 4GB memory and 20GB free disk space
 * A working Pytorch notebook on Google Colab or Jupyter.
 
 ![Kubernetes inter-pod socketing](Namespace_socket_poc02.png)
-
 
 ### Build a Linux namespace-aware popen(3) server
 
