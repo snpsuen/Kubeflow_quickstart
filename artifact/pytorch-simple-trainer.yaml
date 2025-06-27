@@ -1,0 +1,42 @@
+
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: pytorch-simple-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: pyrt-simple
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: pyrt-rj
+          replicas: 1
+          template:
+            metadata:
+              name: pyrt-rj-simple
+              namespace: training
+            spec:
+              template:
+                metadata: 
+                  name: pyrt-simple-pod
+                  namespace: training
+                spec:
+                  containers:
+                    - command:
+                        - "python"
+                        - "/workspace/pytorch_rnn_airpass_example05.py"
+                      image: snpsuen/pytorch_rnn_airpass:05
+                      imagePullPolicy: Always
+                      name: pyrt-simple-container
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: pytorch-simple-trainjob
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: pytorch-simple-runtime
