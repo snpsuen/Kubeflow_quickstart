@@ -3,9 +3,9 @@
 In this lab, we will walk you through the steps of uplifting a sample Pytorch deep learning notebook to Kubeflow on a shoestring, so to speak:
 * Minimal Kubeflow ecosystem: Kubeflow Pipeline + Kubeflow Trainer V2
 * Small footprint: Kind Kubernetes(1.32 or later) on a compute instance or VM, etc of 4GB memory and 20GB free disk space
-* A working Pytorch notebook on Google Colab or Jupyter.
+* A working Pytorch notebook on Google Colab or Jupyter
 
-The exercise is ready to serve as a entry template for extension to other Kubflow compoents like Katib, Model Registry and more complicated train jobs,
+The exercise may serve as a entry template for future extension to other Kubflow compoents like Katib, Model Registry or more complicated train jobs,
 
 ### TL; DR
 
@@ -14,10 +14,12 @@ The exercise is ready to serve as a entry template for extension to other Kubflo
 Sequence of the steps to go through:
 1. Install Kubeflow Pipeline and Kubeflow Trainer V2
 2. Down a chosen Pytorch notebook as a python script
-3. Convert the 
-4. Call socket() to create a socket listening on the frontend. From now on, any worker sockets arising to accept client requests from the listening socket will likewise reside in the frontend.
-5. Call setns(3) to return to the original Linux network namespace of the server.
-6. Go through the standard TCP concurrent server workflow with the sockets to handle each client request with popen(3) in a child process.
+3. Containerize the python script in a docker
+4. Define the Kubeflow Trainer CRDs Trainjob and Trainingruntime
+5. Prepare a docker image for the task of creating the Trainjob and Trainingruntime CRDs
+6. Write a KFP script to define a Kubeflow pipleline job
+7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
+8. Upload the pipeline manifest via the Kubeflow Pipeline UI and run the pipeline
 
 Build the server program from the source code in source/popen_server_ns.c.
 ```
