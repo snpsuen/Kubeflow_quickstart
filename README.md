@@ -1,6 +1,6 @@
 ## Kubeflow Quickstart
 
-In this lab, we will walk you through the steps of uplifting a sample Pytorch deepl learning notebook to Kubeflow on a shoestring, so to speak:
+In this lab, we will walk you through the steps of uplifting a sample Pytorch deep learning notebook to Kubeflow on a shoestring, so to speak:
 * Minimal Kubeflow ecosystem: Kubeflow Pipeline + Kubeflow Trainer V2
 * Small footprint: Kind Kubernetes(1.32 or later) on a compute instance or VM, etc of 4GB memory and 20GB free disk space
 * A working Pytorch notebook on Google Colab or Jupyter.
@@ -9,7 +9,7 @@ The exercise is ready to serve as a entry template for extension to other Kubflo
 
 ### TL; DR
 
-![Kubeflow_shoestring](Namespace_socket_poc02.png)
+![Kubeflow_shoestring](kubeflow_shoestring.png)
 
 Sequence of the steps to go through:
 1. Install Kubeflow Pipeline and Kubeflow Trainer V2
