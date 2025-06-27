@@ -1,18 +1,20 @@
 ## Kubeflow Quickstart
 
-In this lab, we will walk you through the steps of uplifting a sample Pytorch DL notebook to Kubeflow on a shoestring, so to speak:
+In this lab, we will walk you through the steps of uplifting a sample Pytorch deepl learning notebook to Kubeflow on a shoestring, so to speak:
 * Minimal Kubeflow ecosystem: Kubeflow Pipeline + Kubeflow Trainer V2
 * Small footprint: Kind Kubernetes(1.32 or later) on a compute instance or VM, etc of 4GB memory and 20GB free disk space
 * A working Pytorch notebook on Google Colab or Jupyter.
 
+The exercise is ready to serve as a entry template for extension to other Kubflow compoents like Katib, Model Registry and more complicated train jobs,
+
 ### TL; DR
 
-![Kubernetes inter-pod socketing](Namespace_socket_poc02.png)
+![Kubeflow_shoestring](Namespace_socket_poc02.png)
 
 Sequence of the steps to go through:
 1. Install Kubeflow Pipeline and Kubeflow Trainer V2
-2. Down a chosen Pytorch notebook as a pyton script
-3. Call setns(3) to set the Linux network namespace of the server temporarily to that of the frontend.
+2. Down a chosen Pytorch notebook as a python script
+3. Convert the 
 4. Call socket() to create a socket listening on the frontend. From now on, any worker sockets arising to accept client requests from the listening socket will likewise reside in the frontend.
 5. Call setns(3) to return to the original Linux network namespace of the server.
 6. Go through the standard TCP concurrent server workflow with the sockets to handle each client request with popen(3) in a child process.
