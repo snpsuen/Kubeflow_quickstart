@@ -77,6 +77,67 @@ docker push snpsuen/pytorch_rnn_airpass:05
 
 #### 4. Define the Kubeflow Trainer CRDs Trainjob and Trainingruntime
 
+Create a namespace called training and define a Traingruntime CRD called pytorch-simple-runtime in that namespace for Kubeflow Trainer. <br>
+In particular, pytorch-simple-runtime encompasses a replicated job that uses the docker image snpsuen/pytorch_rnn_airpass:05 created earlier in step 3.
+
+```
+kubectl create ns training
+cat > pytorch-simple-trainer.yam <<EOF
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: pytorch-simple-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: pyrt-simple
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: pyrt-rj
+          replicas: 1
+          template:
+            metadata:
+              name: pyrt-rj-simple
+              namespace: training
+            spec:
+              template:
+                metadata: 
+                  name: pyrt-simple-pod
+                  namespace: training
+                spec:
+                  containers:
+                    - command:
+                        - "python"
+                        - "/workspace/pytorch_rnn_airpass_example05.py"
+                      image: snpsuen/pytorch_rnn_airpass:05
+                      imagePullPolicy: Always
+                      name: pyrt-simple-container
+---
+EOF
+```
+
+Similarly, define a TraingJob CRD called pytorch-simple-trainjob in training namespace for Kubeflow Trainer. <br>
+More specifically, pytorch-simple-trainjob points to the TrainingRuntime CRD pytorch-simple-runtime in the .spec.runtimeRef fields.
+
+```
+cat >> pytorch-simple-trainer.yam <<EOF
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: pytorch-simple-trainjob
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: pytorch-simple-runtime
+EOF
+```
+
+You may find the two CRD manifests combined into a single yaml file [pytorch-simple-trainer.yaml](artifact/pytorch-simple-trainer.yaml) in the artiface directory.
+
+#### Prepare a docker image for creation of the Trainjob and Trainingruntime CRDs
 
 To be continued ...
 
