@@ -51,7 +51,7 @@ kubectl apply --server-side -k "https://github.com/kubeflow/trainer.git/manifest
 
 A [simple Pytorch notebook](https://github.com/snpsuen/Kubeflow_quickstart/blob/main/artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) is provided from this repo as an example for the lab. It is adapted from a Pytorch script written by Adrian Tam to train an LSTM DL model to predict about the number of airline passengers in a time series [(see here)](https://machinelearningmastery.com/lstm-for-time-series-prediction-in-pytorch/).
 
-You may upload the notebook sample to Google Colab or Juypter and download it as a python script, which is also kept as 
+You may upload the notebook sample to Google Colab or Juypter and download it as a python script, which is also kept as [pytorch_rnn_lstm_at_example05.py](artifact/pytorch_rnn_lstm_at_example05.py) in the artifact directory of this repo
 
 
 
