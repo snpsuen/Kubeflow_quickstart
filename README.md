@@ -119,10 +119,10 @@ EOF
 ```
 
 Similarly, define a TraingJob CRD called pytorch-simple-trainjob in training namespace for Kubeflow Trainer. <br>
-More specifically, pytorch-simple-trainjob points to the TrainingRuntime CRD pytorch-simple-runtime in the .spec.runtimeRef fields.
+More specifically, pytorch-simple-trainjob points to pytorch-simple-runtime in the .spec.runtimeRef fields.
 
 ```
-cat >> pytorch-simple-trainer.yam <<EOF
+cat >> pytorch-simple-trainer.yaml <<EOF
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainJob
 metadata:
