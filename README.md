@@ -57,7 +57,7 @@ In this example, the lab uses a [simple Pytorch notebook](artifact/Pytorch_RNN_L
 #### 3. Containerize the python script in a docker
 
 Create a docker image based on python:3.13.5-slim-bookworm and install the packages pytorch, pandas and matplotlib. <br>
-Set the default command to *python ./pytorch_rnn_airpass_example05.py* when a container starts from the image.
+Specify *python ./pytorch_rnn_airpass_example05.py* as the default command to run when a container starts from the image.
 
 In this example, the docker image is created and tagged as snpsuen/pytorch_rnn_airpass:05 under the default docker.io registry.
 
@@ -74,6 +74,9 @@ EOF
 docker build -t snpsuen/pytorch_rnn_airpass:05 .
 docker push snpsuen/pytorch_rnn_airpass:05
 ```
+
+#### 4. Define the Kubeflow Trainer CRDs Trainjob and Trainingruntime
+
 
 To be continued ...
 
