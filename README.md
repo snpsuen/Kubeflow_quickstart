@@ -196,7 +196,6 @@ if __name__ == "__main__":
 EOF
 
 python simple_trainjob_pipeline.py
-
 ```
 
 #### 7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
