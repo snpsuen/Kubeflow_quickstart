@@ -1,0 +1,6 @@
+FROM python:3.13.5-slim-bookworm
+RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu && pip install pandas matplotlib
+RUN mkdir /workspace
+WORKDIR /workspace
+COPY ./pytorch_rnn_airpass_example05.py .
+CMD [ "python", "./pytorch_rnn_airpass_example05.py"]
