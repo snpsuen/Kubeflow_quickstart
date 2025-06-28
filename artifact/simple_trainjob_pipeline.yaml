@@ -1,0 +1,54 @@
+# PIPELINE DEFINITION
+# Name: simple-trainjob-pipeline
+# Description: Simple pipeline to launch a trainjob using a component
+components:
+  comp-launch-simple-trainjob:
+    executorLabel: exec-launch-simple-trainjob
+deploymentSpec:
+  executors:
+    exec-launch-simple-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_simple_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.13.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_simple_trainjob():\n    import subprocess\n    subprocess.run([\n\
+          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml\"\
+          \n    ], check=True)\n    print(\"Simple trainjob has been submitted.\"\
+          )\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+pipelineInfo:
+  description: Simple pipeline to launch a trainjob using a component
+  name: simple-trainjob-pipeline
+root:
+  dag:
+    tasks:
+      launch-simple-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-simple-trainjob
+        taskInfo:
+          name: launch-simple-trainjob
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.13.0
