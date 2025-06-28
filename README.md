@@ -139,6 +139,32 @@ You may find the two CRD manifests combined into a single yaml file [pytorch-sim
 
 #### 5. Prepare a docker image for creation of the Trainjob and Trainingruntime CRDs
 
+Create another docker image where the command kubectl can be executed in a container running from it. Such a container will be deployed inside a pipeline run pod served by Kubectl Pipelines. <br>
+More specifically, the docker image is based on python:3.10-slim with the binaries /usr/local/bin/kubectl installed.
+
+```
+cat > Dockerfile <<EOF
+FROM python:3.10-slim
+
+ENV KUBECTL_VERSION=v1.30.1
+
+# Install dependencies and kubectl
+RUN apt-get update && apt-get install -y curl ca-certificates && \
+    curl -LO https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/
+EOF
+
+docker build -t snpsuen/python-3.10-kubectl:v01 .
+docker push snpsuen/python-3.10-kubectl:v01
+```
+
+In this example, the docker image is created and tagged as snpsuen/python-3.10-kubectl:v01 under the default docker.io registry.
+
+#### 6. Write a KFP script to define a Kubeflow pipleline job
+
+
 To be continued ...
 
 
