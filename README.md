@@ -50,11 +50,30 @@ kubectl apply --server-side -k "https://github.com/kubeflow/trainer.git/manifest
 
 #### 2. Download a chosen Pytorch notebook as a python script
 
-Suppose you have chosen a working Pytorch notebook from Google Colab or Juypter. Click *File->Download as* on the UI to download it as a python py script.
+Suppose you have chosen a working Pytorch notebook from Google Colab or Jupyter. Click *File->Download as* on the UI to download it as a python py script.
 
 In this example, the lab uses a [simple Pytorch notebook](artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) in the artiface directory of this repo. It is adapted from a Pytorch script written by Adrian Tam to train an LSTM DL model to predict about the number of airline passengers in a time series [(see here)](https://machinelearningmastery.com/lstm-for-time-series-prediction-in-pytorch/). The notebook sample has been downloaded as [pytorch_rnn_lstm_at_example05.py](artifact/pytorch_rnn_lstm_at_example05.py).
 
 #### 3. Containerize the python script in a docker
+
+Create a docker image based on python:3.13.5-slim-bookworm and install the packages pytorch, pandas and matplotlib. <br>
+Set the default command to *python ./pytorch_rnn_airpass_example05.py* when a container starts from the image.
+
+In this example, the docker image is created and tagged as snpsuen/pytorch_rnn_airpass:05 under the default docker.io registry.
+
+```
+cat > Dockerfile <<EOF
+FROM python:3.13.5-slim-bookworm
+RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu && pip install pandas matplotlib
+RUN mkdir /workspace
+WORKDIR /workspace
+COPY ./pytorch_rnn_airpass_example05.py .
+CMD [ "python", "./pytorch_rnn_airpass_example05.py"]
+EOF
+
+docker build -t snpsuen/pytorch_rnn_airpass:05 .
+docker push snpsuen/pytorch_rnn_airpass:05
+```
 
 To be continued ...
 
