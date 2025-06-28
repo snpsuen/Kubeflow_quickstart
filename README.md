@@ -50,9 +50,9 @@ kubectl apply --server-side -k "https://github.com/kubeflow/trainer.git/manifest
 
 #### 2. Download a chosen Pytorch notebook as a python script
 
-A [simple Pytorch notebook](artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) is provided by this repo as an example for the lab. It is adapted from a Pytorch script written by Adrian Tam to train an LSTM DL model to predict about the number of airline passengers in a time series [(see here)](https://machinelearningmastery.com/lstm-for-time-series-prediction-in-pytorch/).
+Suppose you have chosen a working Pytorch notebook from Google Colab or Juypter. Click *File->Download as* on the UI to download it as a python py script.
 
-You may upload the notebook sample to Google Colab or Juypter and download it as a python script by clicking *File->Download as* on the UI. The script is also found as [pytorch_rnn_lstm_at_example05.py](artifact/pytorch_rnn_lstm_at_example05.py) in the artifact directory of this repo
+In this example, the lab uses a [simple Pytorch notebook](artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) in the artiface directory of this repo. It is adapted from a Pytorch script written by Adrian Tam to train an LSTM DL model to predict about the number of airline passengers in a time series [(see here)](https://machinelearningmastery.com/lstm-for-time-series-prediction-in-pytorch/). The notebook sample has been downloaded as [pytorch_rnn_lstm_at_example05.py](artifact/pytorch_rnn_lstm_at_example05.py).
 
 #### 3. Containerize the python script in a docker
 
