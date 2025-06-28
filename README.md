@@ -5,7 +5,7 @@ In this lab, we will walk you through the steps of uplifting a sample Pytorch de
 * Small footprint: Kind Kubernetes(1.32 or later) on a compute instance or VM, etc of 4GB memory and 20GB free disk space
 * A working Pytorch notebook on Google Colab or Jupyter
 
-The exercise may serve as a entry template for future extension to other Kubflow compoents like Katib, Model Registry or more complicated train jobs.
+The exercise may serve as a entry template for future extension to other Kubflow components like Katib, Model Registry or more complicated train jobs.
 
 ### TL; DR
 
