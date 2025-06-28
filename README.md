@@ -21,7 +21,7 @@ Sequence of the steps to go through:
 7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
 8. Upload the pipeline manifest and run the pipeline on the Kubeflow Pipeline UI
 
-#### 1. Install Kubeflow Pipeline and Kubeflow Trainer V2
+#### 1. Install Kubeflow Pipeline and Kubeflow Trainer V2 as standalone components
 
 Install Kubeflow Piplines according to the [official guide](https://www.kubeflow.org/docs/components/pipelines/operator-guides/installation/).
 
@@ -48,6 +48,8 @@ kubectl apply --server-side -k "https://github.com/kubeflow/trainer.git/manifest
 ```
 
 ### 2. Download a chosen Pytorch notebook as a python script
+
+An [simple Pytorch notebook](https://github.com/snpsuen/Kubeflow_quickstart/blob/main/artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) is provided from this repo as an example for this labs
 
 
 
