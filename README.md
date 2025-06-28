@@ -82,7 +82,7 @@ In particular, pytorch-simple-runtime encompasses a replicated job that uses the
 
 ```
 kubectl create ns training
-cat > pytorch-simple-trainer.yam <<EOF
+cat > pytorch-simple-trainer.yaml <<EOF
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainingRuntime
 metadata:
@@ -137,7 +137,7 @@ EOF
 
 You may find the two CRD manifests combined into a single yaml file [pytorch-simple-trainer.yaml](artifact/pytorch-simple-trainer.yaml) in the artiface directory.
 
-#### Prepare a docker image for creation of the Trainjob and Trainingruntime CRDs
+#### 5. Prepare a docker image for creation of the Trainjob and Trainingruntime CRDs
 
 To be continued ...
 
