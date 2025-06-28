@@ -139,9 +139,9 @@ You may find the two CRD manifests combined into a single yaml file [pytorch-sim
 
 #### 5. Prepare a docker image for creation of the Trainjob and Trainingruntime CRDs
 
-Create another docker image that includes the binaries kubectl. The command will be executed in a container running from the image to create the Trainingruntime and TrainJob CRDs as defined in step 4. Such a container will be deployed inside a pipeline run pod served by Kubectl Pipelines.
+Create another docker image that includes the binaries kubectl. The command *kubectl apply -f manifests.yaml* will be executed in a container running from the image to create the Trainingruntime and TrainJob CRDs as defined in step 4. Such a container will be deployed inside a pipeline run pod served by Kubectl Pipelines.
 
-More specifically, the docker image is based on python:3.10-slim with the binaries /usr/local/bin/kubectl installed.
+More specifically, the docker image is based on python:3.10-slim with the binaries /usr/local/bin/kubectl installed overlay.
 
 ```
 cat > Dockerfile <<EOF
