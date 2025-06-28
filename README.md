@@ -165,6 +165,42 @@ In this example, the docker image is created and tagged as snpsuen/python-3.10-k
 
 #### 6. Write a KFP script to define a Kubeflow pipleline job
 
+Write a KFP python script named simple_trainjob_pipeline.py to define a pipeline and a component responsible for running the pipeline. In this lab, the component will be implemented as a container where python is called to execute the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* and create the featured TrainingRuntime and TrainJob CRDs.
+
+The script is subsequently compiled into a pipeline definition yaml, simple_trainjob_pipeline.yaml, which will be uploaded to Kubeflow Pipelines in step 8.
+
+```
+cat > simple_trainjob_pipeline.py <<EOF
+import kfp
+from kfp import dsl
+
+@dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
+def launch_simple_trainjob():
+    import subprocess
+    subprocess.run([
+        "kubectl", "apply", "-f",
+        "https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml"
+    ], check=True)
+    print("Simple trainjob has been submitted.")
+
+@dsl.pipeline(
+    name="Simple Trainjob Pipeline",
+    description="Simple pipeline to launch a trainjob using a component"
+)
+def simple_trainjob_pipeline():
+    launch_simple_trainjob()
+
+if __name__ == "__main__":
+    from kfp import compiler
+    compiler.Compiler().compile(simple_trainjob_pipeline, "simple_trainjob_pipeline.yaml")
+EOF
+
+python simple_trainjob_pipeline.py
+
+```
+
+#### 7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
+
 
 To be continued ...
 
