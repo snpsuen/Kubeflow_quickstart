@@ -275,9 +275,12 @@ Make sure there are other port forwarding rules in place to forward the VM port 
 Open the Kubeflow Pipelines UI at http://localhost:44380, click \[+ Upload pipeline\] to enter the New Pipeline page. <br>
 Fill in the pipeline particulars and click \[create\]. 
 
+![pipeline_20250629_screen02.PNG](pipeline_20250629_screen02.PNG)
+
 In this example, the new pipeline is nmaed *Simple Trainjob Pipeline*. Click \[+ Create run \] to start running the pipeline. <br>
 Fill in the pipeline and run particulars and click \[start\] to run.
 
+![pipeline_20250629_screen04.PNG](pipeline_20250629_screen04.PNG)
 
 
 
