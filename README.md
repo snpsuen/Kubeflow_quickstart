@@ -200,6 +200,28 @@ python simple_trainjob_pipeline.py
 
 #### 7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
 
+Before submitting your pipeline to Kubeflow Pipelines, it is necessary to provide proper RBAC permissios for a pod created by Kubeflow Pipelines to process the Kubeflow Trainer CRDs TrainingRuntime and TrainJob.
+
+<table>
+	<thead>
+		<tr>
+			<th scope="col">Source: Service Account</th>
+			<th scope="col">Source: Namespace</th>
+			<th scope="col">Target: API Group</th>
+			<th scope="col">Target: CRDs</th>
+			<th scope="col">Target: Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>pipeline-runner</td>
+			<td aligh="left">kubeflow</td>
+			<td aligh="left">Kubeflow Trainer</td>
+			<td aligh="left">TrainingRuntime<br>TrainJob</td>
+			<td aligh="left">get, list, create, update, patch</td>			
+		</tr>
+	</tbody>
+</table>
 
 To be continued ...
 
