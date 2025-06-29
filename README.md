@@ -205,11 +205,11 @@ Before submitting your pipeline to Kubeflow Pipelines, it is necessary to provid
 <table>
 	<thead>
 		<tr>
-			<th scope="col">Source: Service Account</th>
-			<th scope="col">Source: Namespace</th>
-			<th scope="col">Target: API Group</th>
-			<th aligh="left">Target: CRDs</th>
-			<th aligh="left">Target: Actions</th>
+			<th scope="col" aligh="left>Source: Service Account</th>
+			<th scope="col" aligh="left>Source: Namespace</th>
+			<th scope="col" aligh="left>Target: API Group</th>
+			<th scope="col" aligh="left">Target: CRDs</th>
+			<th scope="col" aligh="left">Target: Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -222,6 +222,46 @@ Before submitting your pipeline to Kubeflow Pipelines, it is necessary to provid
 		</tr>
 	</tbody>
 </table>
+
+Define a ClusterRole resource to cater for creating, reading and other relevant operations on the TrainingRuntime and TrainJob CRDs.
+
+```
+cat > rbac_pipeline-runner_trainjob.yaml <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: trainjob-crd-access
+rules:
+  - apiGroups: ["trainer.kubeflow.org"]
+    resources: ["trainjobs", "trainingruntimes"]
+    verbs: ["get", "list", "create", "update", "patch"]
+---
+EOF
+```
+
+Define a ClusterRoleBinding resource to assign the above ClusterRole to the designated service account pipeline-runner in the kubeflow namespace.
+
+```
+cat >> rbac_pipeline-runner_trainjob.yaml <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: allow-pipeline-runner-to-create-traincrd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: trainjob-crd-access
+subjects:
+- kind: ServiceAccount
+  name: pipeline-runner
+  namespace: kubeflow
+EOF
+
+kubectl apply -f ./rbac_pipeline-runner_trainjob.yaml
+```
+
+#### 8. Submit the pipeline manifest and run the pipeline on the Kubeflow Pipeline UI
+
 
 To be continued ...
 
