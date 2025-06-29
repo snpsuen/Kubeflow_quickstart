@@ -292,7 +292,8 @@ simple-trainjob-pipeline-7dgpp-system-container-driver-3957747752   0/2     Comp
 simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438     0/2     Completed   0               63m
 simple-trainjob-pipeline-7dgpp-system-dag-driver-377580790          0/2     Completed   0               64m
 ```
-In particular, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438 is the pipeline run pod which a container is spinned up from the image snpsuen/python-3.10-kubectl:v01. It is in this container that the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* is executed to create the Kubectl Trainer CRDs TrainingRuntime and TrainJob.
+In particular, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438 is the pipeline run pod where a container is started from the image snpsuen/python-3.10-kubectl:v01. <br>
+It is in this container that the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* is executed to create the Kubectl Trainer CRDs TrainingRuntime and TrainJob.
 
 
 To be continued ...
