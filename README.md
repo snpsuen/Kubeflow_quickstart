@@ -209,7 +209,7 @@ Before submitting your pipeline to Kubeflow Pipelines, it is necessary to provid
 			<th scope="col">Source: Namespace</th>
 			<th scope="col">Target: API Group</th>
 			<th scope="col">Target: CRDs</th>
-			<th scope="col" aligh="left">Target: Actions</th>
+			<th scope="col", aligh="left">Target: Actions</th>
 		</tr>
 	</thead>
 	<tbody>
