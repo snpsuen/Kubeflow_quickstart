@@ -272,13 +272,11 @@ kubectl port-forward -n kubeflow svc/ml-pipeline-ui 44380:80
 
 Make sure there are other port forwarding rules in place to forward the VM port such as 44380 to a valid one on your endpoint device, say 44380 again.
 
-Open the Kubeflow Pipelines UI at http://localhost:44380, click \[+ Upload pipeline\] to enter the New Pipeline page. <br>
-Fill in the pipeline particulars and click \[create\]. 
+Open the Kubeflow Pipelines UI at http://localhost:44380, click \[+ Upload pipeline\] to enter the New Pipeline page. Fill in the pipeline particulars and click \[create\]. 
 
 ![pipeline_20250629_screen02.PNG](pipeline_20250629_screen02.PNG)
 
-In this example, the new pipeline is nmaed *Simple Trainjob Pipeline*. Click \[+ Create run \] to start running the pipeline. <br>
-Fill in the pipeline and run particulars and click \[start\] to run.
+In this example, the new pipeline is named *Simple Trainjob Pipeline*. Click \[+ Create run \] to start running the pipeline. Fill in the pipeline and run particulars and click \[start\] to run.
 
 ![pipeline_20250629_screen04.PNG](pipeline_20250629_screen04.PNG)
 
@@ -294,6 +292,9 @@ simple-trainjob-pipeline-7dgpp-system-container-driver-3957747752   0/2     Comp
 simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438     0/2     Completed   0               63m
 simple-trainjob-pipeline-7dgpp-system-dag-driver-377580790          0/2     Completed   0               64m
 ```
+In particular, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438 is the pipeline run pod which a container is spinned up from the image snpsuen/python-3.10-kubectl:v01. It is in this container that the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* is executed to create the Kubectl Trainer CRDs TrainingRuntime and TrainJob.
+
+
 To be continued ...
 
 
