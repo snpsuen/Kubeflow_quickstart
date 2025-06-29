@@ -270,6 +270,14 @@ kubectl port-forward -n kubeflow svc/ml-pipeline-ui 44380:80
 
 Make sure there are other port forwarding rules in place to forward the VM port such as 44380 to a valid one on your endpoint device, say 44380 again.
 
+Open the Kubeflow Pipelines UI at http://localhost:44380, click \[+ Upload pipeline\] to enter the New Pipeline page. <br>
+Fill in the pipeline particulars and click \[create\]. 
+
+In this example, the new pipeline is nmaed *Simple Trainjob Pipeline*. Click \[+ Create run \] to start running the pipeline. <br>
+Fill in the pipeline and run particulars and click \[start\] to run.
+
+
+
 
 To be continued ...
 
