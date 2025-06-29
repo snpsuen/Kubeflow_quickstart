@@ -268,7 +268,7 @@ First, let's forward port 80 of the pipeline ui to a chosen port on your compute
 kubectl port-forward -n kubeflow svc/ml-pipeline-ui 43380:80
 ```
 
-Make sure other port forwarding rules are in place to forward the VM port such as 43380 to a valid one on your endpoint device, say 43380 again.
+Make sure there are other port forwarding rules in place to forward the VM port such as 43380 to a valid one on your endpoint device, say 43380 again.
 
 
 To be continued ...
