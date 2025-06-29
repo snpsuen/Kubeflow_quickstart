@@ -282,8 +282,18 @@ Fill in the pipeline and run particulars and click \[start\] to run.
 
 ![pipeline_20250629_screen04.PNG](pipeline_20250629_screen04.PNG)
 
+Observe the pipeline completed the run successfully.
 
+![screencapture-localhost-43380-2025-06-24-19_04_26.png](screencapture-localhost-43380-2025-06-24-19_04_26.png)
+![screencapture-localhost-43380-2025-06-24-19_03_39.png](screencapture-localhost-43380-2025-06-24-19_03_39.png)
 
+The pipeline is launched by the following pods on the Kubeflow Pipelines data plane.
+```
+keyuser@ubunclone:~$ kubectl -n kubeflow get pod | grep simple
+simple-trainjob-pipeline-7dgpp-system-container-driver-3957747752   0/2     Completed   0               64m
+simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438     0/2     Completed   0               63m
+simple-trainjob-pipeline-7dgpp-system-dag-driver-377580790          0/2     Completed   0               64m
+```
 To be continued ...
 
 
