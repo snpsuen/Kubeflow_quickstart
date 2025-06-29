@@ -205,20 +205,20 @@ Before submitting your pipeline to Kubeflow Pipelines, it is necessary to provid
 <table>
 	<thead>
 		<tr>
-			<th scope="col" aligh="left>Source: Service Account</th>
-			<th scope="col" aligh="left>Source: Namespace</th>
-			<th scope="col" aligh="left>Target: API Group</th>
-			<th scope="col" aligh="left">Target: CRDs</th>
-			<th scope="col" aligh="left">Target: Actions</th>
+			<th scope="col" align="left">Source: Service Account</th>
+			<th scope="col" align="left">Source: Namespace</th>
+			<th scope="col" align="left">Target: API Group</th>
+			<th scope="col" align="left">Target: CRDs</th>
+			<th scope="col" align="left">Target: Actions</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td>pipeline-runner</td>
-			<td aligh="left">kubeflow</td>
-			<td aligh="left">Kubeflow Trainer</td>
-			<td aligh="left">TrainingRuntime<br>TrainJob</td>
-			<td aligh="left">get, list, create, update, patch</td>			
+			<td align="left">kubeflow</td>
+			<td align="left">Kubeflow Trainer</td>
+			<td align="left">TrainingRuntime<br>TrainJob</td>
+			<td align="left">get, list, create, update, patch</td>			
 		</tr>
 	</tbody>
 </table>
