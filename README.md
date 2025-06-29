@@ -263,12 +263,12 @@ kubectl apply -f ./rbac_pipeline-runner_trainjob.yaml
 #### 8. Submit the pipeline manifest and run the pipeline on the Kubeflow Pipeline UI
 
 Thank you for your time and patience. If you get to this point, you are all set to submit the pipeline created in this lab to Kubeflow Pipelines and run it aftewrard.
-First, let's forward port 80 of the pipeline ui to a chosen port on your compute instance or VM, say 43380 in this exampe.
+First, let's forward port 80 of the pipeline ui to a chosen port on your compute instance or VM, say 44380 in this exampe.
 ```
-kubectl port-forward -n kubeflow svc/ml-pipeline-ui 43380:80
+kubectl port-forward -n kubeflow svc/ml-pipeline-ui 44380:80
 ```
 
-Make sure there are other port forwarding rules in place to forward the VM port such as 43380 to a valid one on your endpoint device, say 43380 again.
+Make sure there are other port forwarding rules in place to forward the VM port such as 44380 to a valid one on your endpoint device, say 44380 again.
 
 
 To be continued ...
