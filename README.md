@@ -54,7 +54,7 @@ Suppose you have chosen a working Pytorch notebook from Google Colab or Jupyter.
 
 In this example, the lab uses a [simple Pytorch notebook](artifact/Pytorch_RNN_LSTM_AT_example05.ipynb) in the artiface directory of this repo. It is adapted from a Pytorch script written by Adrian Tam to train an LSTM DL model to predict about the number of airline passengers in a time series [(see here)](https://machinelearningmastery.com/lstm-for-time-series-prediction-in-pytorch/). The notebook sample has been downloaded as [pytorch_rnn_lstm_at_example05.py](artifact/pytorch_rnn_lstm_at_example05.py).
 
-Point to note: To reduce execution time, our sample Pytorch notebook uses only 100 epochs to train the LSTM model concerned, which is far from satisfactory. As the model is seriously undertrained, the end product will be deemed very rudimentary or impractical. Neveretheless, our main focus here is about getting the script started and completed properly as a train job in a Kubeflow pipeline.
+Point to note: To reduce execution time, our sample Pytorch notebook uses only 100 epochs to train the LSTM model concerned, which is far from satisfactory. As the model is seriously undertrained, its final delivery is likely to be deemed rudimentary or impractical. Neveretheless, our main focus here is about getting the script started and completed properly as a train job in a Kubeflow pipeline.
 
 #### 3. Containerize the python script in a docker
 
