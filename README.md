@@ -292,8 +292,80 @@ simple-trainjob-pipeline-7dgpp-system-container-driver-3957747752   0/2     Comp
 simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438     0/2     Completed   0               63m
 simple-trainjob-pipeline-7dgpp-system-dag-driver-377580790          0/2     Completed   0               64m
 ```
-In particular, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438 is the pipeline run pod where a container is started from the image snpsuen/python-3.10-kubectl:v01. <br>
-It is in this container that the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* is executed to create the Kubectl Trainer CRDs TrainingRuntime and TrainJob.
+
+In particular, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438 is the pipeline run pod where a container is started from the image snpsuen/python-3.10-kubectl:v01 \(step 5\). It is in this container that the command *kubectl apply -f https://raw.githubusercontent.com/snpsuen/Deep_Learning_Data/refs/heads/main/script/pytorch-simple-trainer.yaml* is executed to create the Kubectl Trainer CRDs TrainingRuntime and TrainJob.
+
+```
+keyuser@ubunclone:~$ kubectl -n training get trainjob
+NAME                      STATE      AGE
+pytorch-simple-trainjob   Complete   5m28s
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ kubectl -n training get trainingruntime
+NAME                     AGE
+pytorch-simple-runtime   5m33s
+keyuser@ubunclone:~$ kubectl -n training get pod
+NAME                                        READY   STATUS      RESTARTS   AGE
+pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq   0/1     Completed   0          5m8s
+```
+
+As shown above, pytorch-simple-trainjob and pytorch-simple-runtime are respectively the TrainJob and TrainingRuntime custom resources created by executing the kubectl apply command in the pipeline run pod, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438.
+
+In the meantime, pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq is the train job run pod that is instrumental in running a container from the image snpsuen/pytorch_rnn_airpass:05 \(step 3\). It is in this container that our sample Pytorch DL script, pytorch_rnn_airpass_example05.py, is executed.
+
+Finally, examine the logs of the pod for the output from pytorch_rnn_airpass_example05.py.
+```
+keyuser@ubunclone:~$ kubectl -n training logs pytorch-simple-trainjob-pyrt-rj-0-0-j7vzm
+/workspace/pytorch_rnn_airpass_example05.py:108: DeprecationWarning: __array_wrap__ must accept context and return_scalar arguments (positionally) in the future. (Deprecated NumPy 2.0)
+  train_rmse = np.sqrt(mseloss(y_pred, y_train))
+/workspace/pytorch_rnn_airpass_example05.py:110: DeprecationWarning: __array_wrap__ must accept context and return_scalar arguments (positionally) in the future. (Deprecated NumPy 2.0)
+  test_rmse = np.sqrt(mseloss(y_pred, y_test))
+/workspace/pytorch_rnn_airpass_example05.py:130: DeprecationWarning: __array__ implementation doesn't accept a copy keyword, so passing copy=False failed. __array__ must implement 'dtype' and 'copy' keyword arguments.
+  train_plot[lookback:train_size] = model(X_train)
+/workspace/pytorch_rnn_airpass_example05.py:134: DeprecationWarning: __array__ implementation doesn't accept a copy keyword, so passing copy=False failed. __array__ must implement 'dtype' and 'copy' keyword arguments.
+  test_plot[train_size+lookback:len(timeseries)] = model(X_test)
+(1) Reading airline passengers CSV ...
+
+Type of df =  <class 'pandas.core.frame.DataFrame'>
+df.shape =  (144, 2)
+Type of timeseries =  <class 'numpy.ndarray'>
+timeseries.shape =  (144, 1)
+Type of train =  <class 'numpy.ndarray'>
+train.shape =  (100, 1)
+Type of test =  <class 'numpy.ndarray'>
+test.shape =  (44, 1)
+Type of forecast =  <class 'numpy.ndarray'>
+forecast.shape =  (4, 1)
+(2) Preparing DL training and testing datasets ...
+
+Type of X_train, type of y_train =  <class 'torch.Tensor'> <class 'torch.Tensor'>
+X_train.shape(samples, timesteps, features), y_train.shape(samples, features) =  torch.Size([96, 4, 1]) torch.Size([96, 1])
+Type of X_test, type of y_test =  <class 'torch.Tensor'> <class 'torch.Tensor'>
+X_test.shape(samples, timesteps, features), y_test.shape(samples, features) =  torch.Size([40, 4, 1]) torch.Size([40, 1])
+Type of X_forecast =  <class 'torch.Tensor'>
+X_forecast.shape(samples, timesteps, features) =  torch.Size([1, 4, 1])
+(3) Setting up an RNN LSTM model ...
+
+(4) Training and evaluating the model ...
+
+Epoch 0: train RMSE 233.9438, test RMSE 427.7932
+Epoch 10: train RMSE 227.7156, test RMSE 421.3744
+Epoch 20: train RMSE 221.9895, test RMSE 415.4154
+Epoch 30: train RMSE 217.1105, test RMSE 410.3401
+Epoch 40: train RMSE 212.7082, test RMSE 405.7504
+Epoch 50: train RMSE 208.4798, test RMSE 401.3320
+Epoch 60: train RMSE 204.3739, test RMSE 397.0318
+Epoch 70: train RMSE 200.3581, test RMSE 392.8156
+Epoch 80: train RMSE 196.4320, test RMSE 388.6830
+Epoch 90: train RMSE 192.5618, test RMSE 384.5982
+(5) Forecasting from the model ...
+
+Forecast input =  tensor([[[508.],
+         [461.],
+         [390.],
+         [432.]]])
+Forecast output =  tensor([[47.7235]])
+(6) Plotting the model ...
+```
 
 
 To be continued ...
