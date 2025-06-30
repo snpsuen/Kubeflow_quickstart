@@ -11,7 +11,7 @@ The exercise may serve as a entry template for future extension to other Kubflow
 
 ![Kubeflow_shoestring](kubeflow_shoestring.png)
 
-### Step by step walk through
+### Step by step on-boarding
 
 1. Install Kubeflow Pipelines and Kubeflow Trainer V2
 2. Download a chosen Pytorch notebook as a python script
