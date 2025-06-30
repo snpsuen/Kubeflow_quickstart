@@ -308,9 +308,9 @@ NAME                                        READY   STATUS      RESTARTS   AGE
 pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq   0/1     Completed   0          5m8s
 ```
 
-As shown above, pytorch-simple-trainjob and pytorch-simple-runtime are respectively the TrainJob and TrainingRuntime custom resources created by executing the kubectl apply command in the pipeline run pod, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438.
+As shown above, pytorch-simple-trainjob and pytorch-simple-runtime are respectively the TrainJob and TrainingRuntime custom resources that are created by executing the kubectl apply command in the pipeline run pod, simple-trainjob-pipeline-7dgpp-system-container-impl-3880865438.
 
-In the meantime, pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq is the train job run pod that is instrumental in running a container from the image snpsuen/pytorch_rnn_airpass:05 \(step 3\). It is in this container that our sample Pytorch DL script, pytorch_rnn_airpass_example05.py, is executed.
+In the meantime, pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq is the train job run pod with a container running from the image snpsuen/pytorch_rnn_airpass:05 \(step 3\). It is in this container that our sample Pytorch DL script, pytorch_rnn_airpass_example05.py, is executed.
 
 Finally, examine the logs of the pod for the output from pytorch_rnn_airpass_example05.py.
 ```
