@@ -314,7 +314,7 @@ In the meantime, pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq is the train job run 
 
 Finally, examine the logs of the pod for the output from pytorch_rnn_airpass_example05.py.
 ```
-keyuser@ubunclone:~$ kubectl -n training logs pytorch-simple-trainjob-pyrt-rj-0-0-j7vzm
+keyuser@ubunclone:~$ kubectl -n training logs pytorch-simple-trainjob-pyrt-rj-0-0-r6dnq
 /workspace/pytorch_rnn_airpass_example05.py:108: DeprecationWarning: __array_wrap__ must accept context and return_scalar arguments (positionally) in the future. (Deprecated NumPy 2.0)
   train_rmse = np.sqrt(mseloss(y_pred, y_train))
 /workspace/pytorch_rnn_airpass_example05.py:110: DeprecationWarning: __array_wrap__ must accept context and return_scalar arguments (positionally) in the future. (Deprecated NumPy 2.0)
@@ -347,27 +347,26 @@ X_forecast.shape(samples, timesteps, features) =  torch.Size([1, 4, 1])
 
 (4) Training and evaluating the model ...
 
-Epoch 0: train RMSE 233.9438, test RMSE 427.7932
-Epoch 10: train RMSE 227.7156, test RMSE 421.3744
-Epoch 20: train RMSE 221.9895, test RMSE 415.4154
-Epoch 30: train RMSE 217.1105, test RMSE 410.3401
-Epoch 40: train RMSE 212.7082, test RMSE 405.7504
-Epoch 50: train RMSE 208.4798, test RMSE 401.3320
-Epoch 60: train RMSE 204.3739, test RMSE 397.0318
-Epoch 70: train RMSE 200.3581, test RMSE 392.8156
-Epoch 80: train RMSE 196.4320, test RMSE 388.6830
-Epoch 90: train RMSE 192.5618, test RMSE 384.5982
+Epoch 0: train RMSE 233.5946, test RMSE 427.4282
+Epoch 10: train RMSE 226.2914, test RMSE 419.9002
+Epoch 20: train RMSE 220.0955, test RMSE 413.4479
+Epoch 30: train RMSE 214.4575, test RMSE 407.5753
+Epoch 40: train RMSE 209.1147, test RMSE 401.9960
+Epoch 50: train RMSE 203.9969, test RMSE 396.6364
+Epoch 60: train RMSE 199.1055, test RMSE 391.4982
+Epoch 70: train RMSE 194.3847, test RMSE 386.5235
+Epoch 80: train RMSE 189.7736, test RMSE 381.6482
+Epoch 90: train RMSE 185.2617, test RMSE 376.8608
 (5) Forecasting from the model ...
 
 Forecast input =  tensor([[[508.],
          [461.],
          [390.],
          [432.]]])
-Forecast output =  tensor([[47.7235]])
+Forecast output =  tensor([[56.2696]])
 (6) Plotting the model ...
 ```
 
+#### 9. The whole picture
 
-To be continued ...
-
-
+![Kubeflow_architecture](kubeflow_architecture.png)
