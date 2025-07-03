@@ -283,7 +283,7 @@ In this example, the new pipeline is named *Simple Trainjob Pipeline*. Click \[+
 Observe the pipeline completed the run successfully.
 
 ![screencapture-localhost-43380-2025-06-24-19_04_26.png](screencapture-localhost-43380-2025-06-24-19_04_26.png)
-![screencapture-localhost-43380-2025-06-24-19_03_39.png](screencapture-localhost-43380-2025-06-24-19_03_39.png)
+![screencapture-localhost-43380-2025-06-24-19_04_50](screencapture-localhost-43380-2025-06-24-19_04_50.png)
 
 The pipeline is launched by the following pods on the Kubeflow Pipelines data plane.
 ```
