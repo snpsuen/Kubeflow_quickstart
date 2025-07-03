@@ -202,7 +202,7 @@ python simple_trainjob_pipeline.py
 
 #### 7. Sort out RBAC beteen Kubeflow pipeline and Kubeflow Trainer
 
-Before submitting your pipeline to Kubeflow Pipelines, it is necessary to grant proper RBAC permissios to a pod created by Kubeflow Pipelines so that it is allosed to create and process the Kubeflow Trainer CRDs TrainingRuntime and TrainJob.
+Before submitting your pipeline to Kubeflow Pipelines, it is necessary to grant proper RBAC permissios to a pod created by Kubeflow Pipelines so that it is allowed to create the Kubeflow Trainer CRDs TrainingRuntime and TrainJob.
 
 <table>
 	<thead>
