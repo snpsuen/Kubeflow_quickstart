@@ -1,0 +1,41 @@
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: simple-train-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: simple-train-rt
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: simple-train-rj
+          template:
+            metadata:
+              name: simple-train-tp
+              namespace: training
+            spec:
+              parallelism: 2
+              template:
+                metadata: 
+                  name: simple-train-pod
+                  namespace: training
+                spec:
+                  containers:
+                    - command:
+                        - "python"
+                        - "/workspace/call_train_lib.py"
+                      image: snpsuen/call_train_lib:01
+                      imagePullPolicy: Always
+                      name: simple-train-container
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: simple-train-job
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: simple-train-runtime
