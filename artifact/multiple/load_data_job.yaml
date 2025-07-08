@@ -27,6 +27,7 @@ spec:
                     - image: snpsuen/call_train_lib:02
                       imagePullPolicy: Always
                       name: common-train-container
+                      command: ["python", "/workspace/call_load_data.py"]
                       volumeMounts:
                         - name: pytorch-vol
                           mountPath: /pytorch
@@ -42,9 +43,6 @@ metadata:
   name: load-data-job
   namespace: training # Or the namespace where your runtime will live
 spec:
-  # runtimeRef:
-  #  kind: TrainingRuntime
-  #  name: common-trainer-runtime
-  trainer:
-    image: snpsuen/call_train_lib:02
-    command: ["python", "/workspace/call_load_data.py"]
+  runtimeRef:
+    kind: TrainingRuntime
+    name: common-trainer-runtime
