@@ -26,7 +26,7 @@ spec:
                   containers:
                     - image: snpsuen/call_train_lib:02
                       imagePullPolicy: Always
-                      name: simple-train-container
+                      name: common-train-container
                       volumeMounts:
                         - name: pytorch-vol
                           mountPath: /pytorch
@@ -46,4 +46,5 @@ spec:
     kind: TrainingRuntime
     name: common-trainer-runtime
   trainer:
+    image: snpsuen/call_train_lib:02
     command: ["python", "/workspace/call_load_data.py"]
