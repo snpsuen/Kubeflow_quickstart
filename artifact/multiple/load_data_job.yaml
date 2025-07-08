@@ -42,9 +42,9 @@ metadata:
   name: load-data-job
   namespace: training # Or the namespace where your runtime will live
 spec:
-  runtimeRef:
-    kind: TrainingRuntime
-    name: common-trainer-runtime
+  # runtimeRef:
+  #  kind: TrainingRuntime
+  #  name: common-trainer-runtime
   trainer:
     image: snpsuen/call_train_lib:02
     command: ["python", "/workspace/call_load_data.py"]
