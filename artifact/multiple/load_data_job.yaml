@@ -45,3 +45,5 @@ spec:
   runtimeRef:
     kind: TrainingRuntime
     name: common-trainer-runtime
+  trainer:
+    command: ["python", "/workspace/call_load_data.py"]
