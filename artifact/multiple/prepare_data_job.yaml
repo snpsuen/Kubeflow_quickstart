@@ -2,32 +2,32 @@
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainingRuntime
 metadata:
-  name: common-trainer-runtime
+  name: prepare-data-runtime
   namespace: training # Or the namespace where your runtime will live
 spec:
   template:
     metadata:
-      name: common-trainer-runtime
+      name: prepare-data-runtime
       namespace: training
     spec:
       replicatedJobs:
-        - name: common-trainer-rj
+        - name: prepare-data-rj
           template:
             metadata:
-              name: common-trainer-rj
+              name: prepare-data-rj
               namespace: training
             spec:
               parallelism: 1
               template:
                 metadata: 
-                  name: common-trainer-pod
+                  name: prepare-data-pod
                   namespace: training
                 spec:
                   containers:
                     - image: snpsuen/call_train_lib:02
                       imagePullPolicy: Always
-                      name: common-train-container
-                      command: ["python", "/workspace/call_load_data.py"]
+                      name: prepare-data-container
+                      command: ["python", "/workspace/call_prepare_data.py"]
                       volumeMounts:
                         - name: pytorch-vol
                           mountPath: /pytorch
@@ -40,9 +40,9 @@ spec:
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainJob
 metadata:
-  name: load-data-job
+  name: prepare-data-job
   namespace: training # Or the namespace where your runtime will live
 spec:
   runtimeRef:
     kind: TrainingRuntime
-    name: common-trainer-runtime
+    name: prepare-data-runtime
