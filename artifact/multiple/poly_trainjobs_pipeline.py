@@ -16,6 +16,7 @@ def launch_load_data_trainjob():
 @dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
 def launch_prepare_data_trainjob():
     import subprocess
+    import time
     subprocess.run([
         "kubectl", "apply", "-f",
         "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/prepare_data_job.yaml"
@@ -27,6 +28,7 @@ def launch_prepare_data_trainjob():
 @dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
 def launch_train_model_trainjob():
     import subprocess
+    import time
     subprocess.run([
         "kubectl", "apply", "-f",
         "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/train_model_job.yaml"
@@ -38,6 +40,7 @@ def launch_train_model_trainjob():
 @dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
 def launch_model_forecast_trainjob():
     import subprocess
+    import time
     subprocess.run([
         "kubectl", "apply", "-f",
         "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/model_forecast_job.yaml"
