@@ -1,0 +1,175 @@
+# PIPELINE DEFINITION
+# Name: multiple-trainjobs-pipeline
+# Description: A pipeline to launch multiple train jobs using components
+components:
+  comp-launch-load-data-trainjob:
+    executorLabel: exec-launch-load-data-trainjob
+  comp-launch-model-forecast-trainjob:
+    executorLabel: exec-launch-model-forecast-trainjob
+  comp-launch-prepare-data-trainjob:
+    executorLabel: exec-launch-prepare-data-trainjob
+  comp-launch-train-model-trainjob:
+    executorLabel: exec-launch-train-model-trainjob
+deploymentSpec:
+  executors:
+    exec-launch-load-data-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_load_data_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.13.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_load_data_trainjob():\n    import subprocess\n    subprocess.run([\n\
+          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/load_data_job.yaml\"\
+          \n    ], check=True)\n    print(\"Load data trainjob has been submitted.\"\
+          )\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+    exec-launch-model-forecast-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_model_forecast_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.13.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_model_forecast_trainjob():\n    import subprocess\n  \
+          \  subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n        \"\
+          https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/model_forecast_job.yaml\"\
+          \n    ], check=True)\n    print(\"Model forecast trainjob has been submitted.\"\
+          )\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+    exec-launch-prepare-data-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_prepare_data_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.13.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_prepare_data_trainjob():\n    import subprocess\n    subprocess.run([\n\
+          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/prepare_data_job.yaml\"\
+          \n    ], check=True)\n    print(\"Prepare data trainjob has been submitted.\"\
+          )\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+    exec-launch-train-model-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_train_model_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.13.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_train_model_trainjob():\n    import subprocess\n    subprocess.run([\n\
+          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/train_model_job.yaml\"\
+          \n    ], check=True)\n    print(\"Train model trainjob has been submitted.\"\
+          )\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+pipelineInfo:
+  description: A pipeline to launch multiple train jobs using components
+  name: multiple-trainjobs-pipeline
+root:
+  dag:
+    tasks:
+      launch-load-data-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-load-data-trainjob
+        taskInfo:
+          name: launch-load-data-trainjob
+      launch-model-forecast-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-model-forecast-trainjob
+        taskInfo:
+          name: launch-model-forecast-trainjob
+      launch-prepare-data-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-prepare-data-trainjob
+        taskInfo:
+          name: launch-prepare-data-trainjob
+      launch-train-model-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-train-model-trainjob
+        taskInfo:
+          name: launch-train-model-trainjob
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.13.0
