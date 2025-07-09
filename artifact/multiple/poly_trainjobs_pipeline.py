@@ -4,11 +4,14 @@ from kfp import dsl
 @dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
 def launch_load_data_trainjob():
     import subprocess
+    import time
     subprocess.run([
         "kubectl", "apply", "-f",
         "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/load_data_job.yaml"
     ], check=True)
-    print("Load data trainjob has been submitted.")
+    command = "kubectl -n training get trainjob load-data-job -o=jsonpath='{.status.conditions[*].type}'"
+    while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
+        time.sleep(1)
 
 @dsl.component(base_image='snpsuen/python-3.10-kubectl:v01')
 def launch_prepare_data_trainjob():
