@@ -1,0 +1,48 @@
+
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: model-forecast-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: model-forecast-runtime
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: model-forecast-rj
+          template:
+            metadata:
+              name: model-forecast-rj
+              namespace: training
+            spec:
+              parallelism: 1
+              template:
+                metadata: 
+                  name: model-forecast-pod
+                  namespace: training
+                spec:
+                  containers:
+                    - image: snpsuen/call_train_lib:02
+                      imagePullPolicy: Always
+                      name: model-forecast-container
+                      command: ["python", "/workspace/call_model_forecast.py"]
+                      volumeMounts:
+                        - name: pytorch-vol
+                          mountPath: /pytorch
+                  volumes:
+                    - name: pytorch-vol
+                      hostPath:
+                        path: /var/tmp/pytorch
+                        type: DirectoryOrCreate
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: model-forecast-job
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: model-forecast-runtime
