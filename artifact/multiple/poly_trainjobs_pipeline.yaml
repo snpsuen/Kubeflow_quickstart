@@ -38,10 +38,12 @@ deploymentSpec:
 
           '
         - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
-          \ *\n\ndef launch_load_data_trainjob():\n    import subprocess\n    subprocess.run([\n\
-          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/load_data_job.yaml\"\
-          \n    ], check=True)\n    print(\"Load data trainjob has been submitted.\"\
-          )\n\n"
+          \ *\n\ndef launch_load_data_trainjob():\n    import subprocess\n    import\
+          \ time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n\
+          \        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/load_data_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob load-data-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
         image: snpsuen/python-3.10-kubectl:v01
     exec-launch-model-forecast-trainjob:
       container:
@@ -70,10 +72,11 @@ deploymentSpec:
           '
         - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
           \ *\n\ndef launch_model_forecast_trainjob():\n    import subprocess\n  \
-          \  subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n        \"\
-          https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/model_forecast_job.yaml\"\
-          \n    ], check=True)\n    print(\"Model forecast trainjob has been submitted.\"\
-          )\n\n"
+          \  import time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"\
+          -f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/model_forecast_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob model-forecast-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
         image: snpsuen/python-3.10-kubectl:v01
     exec-launch-prepare-data-trainjob:
       container:
@@ -101,10 +104,12 @@ deploymentSpec:
 
           '
         - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
-          \ *\n\ndef launch_prepare_data_trainjob():\n    import subprocess\n    subprocess.run([\n\
-          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/prepare_data_job.yaml\"\
-          \n    ], check=True)\n    print(\"Prepare data trainjob has been submitted.\"\
-          )\n\n"
+          \ *\n\ndef launch_prepare_data_trainjob():\n    import subprocess\n    import\
+          \ time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n\
+          \        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/prepare_data_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob prepare-data-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
         image: snpsuen/python-3.10-kubectl:v01
     exec-launch-train-model-trainjob:
       container:
@@ -132,10 +137,12 @@ deploymentSpec:
 
           '
         - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
-          \ *\n\ndef launch_train_model_trainjob():\n    import subprocess\n    subprocess.run([\n\
-          \        \"kubectl\", \"apply\", \"-f\",\n        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/train_model_job.yaml\"\
-          \n    ], check=True)\n    print(\"Train model trainjob has been submitted.\"\
-          )\n\n"
+          \ *\n\ndef launch_train_model_trainjob():\n    import subprocess\n    import\
+          \ time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n\
+          \        \"https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/multiple/train_model_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob train-model-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
         image: snpsuen/python-3.10-kubectl:v01
 pipelineInfo:
   description: A pipeline to launch multiple train jobs using components
@@ -155,6 +162,8 @@ root:
           enableCache: true
         componentRef:
           name: comp-launch-model-forecast-trainjob
+        dependentTasks:
+        - launch-train-model-trainjob
         taskInfo:
           name: launch-model-forecast-trainjob
       launch-prepare-data-trainjob:
@@ -162,6 +171,8 @@ root:
           enableCache: true
         componentRef:
           name: comp-launch-prepare-data-trainjob
+        dependentTasks:
+        - launch-load-data-trainjob
         taskInfo:
           name: launch-prepare-data-trainjob
       launch-train-model-trainjob:
@@ -169,6 +180,8 @@ root:
           enableCache: true
         componentRef:
           name: comp-launch-train-model-trainjob
+        dependentTasks:
+        - launch-prepare-data-trainjob
         taskInfo:
           name: launch-train-model-trainjob
 schemaVersion: 2.1.0
