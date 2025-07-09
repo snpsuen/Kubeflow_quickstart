@@ -49,4 +49,4 @@ def poly_trainjobs_pipeline():
   
 if __name__ == "__main__":
     from kfp import compiler
-    compiler.Compiler().compile(simple_trainjob_pipeline, "poly_trainjobs_pipeline.yaml")
+    compiler.Compiler().compile(poly_trainjobs_pipeline, "poly_trainjobs_pipeline.yaml")
