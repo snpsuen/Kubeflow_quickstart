@@ -25,12 +25,13 @@ spec:
                 spec:
                   containers:
                     - image: snpsuen/call_train_lib:02
-                      imagePullPolicy: Always
+                      imagePullPolicy: IfNotPresent
                       name: load-data-container
                       command: ["python", "/workspace/call_load_data.py"]
                       volumeMounts:
                         - name: pytorch-vol
                           mountPath: /pytorch
+                  nodeName: kfp-control-plane
                   volumes:
                     - name: pytorch-vol
                       hostPath:
