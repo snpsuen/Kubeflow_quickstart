@@ -25,7 +25,7 @@ spec:
                 spec:
                   containers:
                     - image: snpsuen/call_train_lib:02
-                      imagePullPolicy: ifNotPresent
+                      imagePullPolicy: IfNotPresent
                       name: train-model-container
                       command: ["python", "/workspace/call_train_model.py"]
                       volumeMounts:
