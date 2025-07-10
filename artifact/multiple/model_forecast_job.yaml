@@ -25,12 +25,13 @@ spec:
                 spec:
                   containers:
                     - image: snpsuen/call_train_lib:02
-                      imagePullPolicy: Always
+                      imagePullPolicy: IfNotPresent
                       name: model-forecast-container
                       command: ["python", "/workspace/call_model_forecast.py"]
                       volumeMounts:
                         - name: pytorch-vol
                           mountPath: /pytorch
+                  nodeName: kfp-control-plane
                   volumes:
                     - name: pytorch-vol
                       hostPath:
