@@ -47,7 +47,7 @@ Refer to the following manifests in this repo directory for the TrainJob and Tra
 3. train_model_job.yaml
 4. model_forecast.yaml
 
-All train jobs are eventually implemented by job pods that share the same docker image but run with different entry point commands.
+All train jobs are eventually implemented by job pods that share the same docker image but start with different entry point commands.
 <table>
 	<tr>
 		<th scope="col" align="left">Manifest</th>
@@ -90,3 +90,7 @@ All train jobs are eventually implemented by job pods that share the same docker
 		<td align="left">python ./call_model_forecast.py</td>
 	</tr>
 </table>
+
+To facilitate the passage of data from one job pod to another, pytorch objects returned by a pod, mostly in the form of various data sets or models, are written to a file system via torch.save(}. They are subsequently fed into the receving pod using torch.load(}. <br>
+In this exercise, we go for a quick and dirty option whereby a designated hostpath volume, namely /var/tmp/pytorch, is shared by the job pods via the container mount point /pytorch. <br>
+To ensure access to the same hostpath volume throughout the pipeline, we schedule all the job pods to run on the same kubernetes node by hardcoding the nodename field of the pod template, template.spec.nodename. 
