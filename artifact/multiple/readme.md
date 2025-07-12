@@ -12,7 +12,21 @@ Hope the exercise can serve as a template for building other pipelines that invo
 
 ![Multiple_pipeline_coomponents](multiple_pipeline_components.png)
 
-### Package the Pytorch scripts in a docker image.
+### Containerize the DL source code
+
+Place the pytorch scripts as per the directory layout below.
+```
+workspace/
+├── simple_train_lib.py
+├── call_train_lib.py
+├── call_load_data.py
+├── call_prepare_data.py
+├── call_train_model.py
+└── call_model_forecast.py
+```
+
+Package the scripts into a docker image, which will be used to spin up the train job worker pods.
+
 
 
 
