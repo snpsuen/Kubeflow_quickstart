@@ -14,7 +14,7 @@ Hope the exercise can serve as a template for building other pipelines that invo
 
 ### Containerize the DL source code
 
-Place the pytorch scripts as per the directory layout below.
+Place the pytorch scripts in a suitable environment as per the directory layout below.
 ```
 workspace/
 ├── simple_train_lib.py
@@ -25,8 +25,19 @@ workspace/
 └── call_model_forecast.py
 ```
 
-Package the scripts into a docker image, which will be used to spin up the train job worker pods.
+Package the scripts into a docker image, which will be used to spin up the train job worker pods. In this example, the image is tagged snpsuen/call_train_lib:02,
+```
+cat > Dockerfile <<EOF
+FROM python:3.13.5-slim-bookworm
+RUN pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu && pip install pandas matplotlib
+RUN apt-get update && apt-get install -y nano procps
+WORKDIR /workspace
+COPY . .
+CMD [ "python", "./call_train_lib.py"]
+EOF
 
+docker build -t snpsuen/call_train_lib:02 .
+```
 
 
 
