@@ -87,8 +87,8 @@ All train jobs are eventually implemented by job pods that share the same docker
 			<td align="left">snpsuen/call_train_lib:02</td>
 			<td align="left">python ./call_train_model.py</td>
 		</tr>
-
-                 <tr>
+                
+		<tr>
 			<td align="left">model_forecast_job.yaml</td>
 			<td align="left">model-forecast-job</td>
 			<td align="left">model-forecast-runtime</td>
@@ -96,9 +96,5 @@ All train jobs are eventually implemented by job pods that share the same docker
 			<td align="left">snpsuen/call_train_lib:02</td>
 			<td align="left">python ./call_model_forecast.py</td>
 		</tr>
-
 	</tbody>
 </table>
-
-
-
