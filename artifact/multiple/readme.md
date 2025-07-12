@@ -12,7 +12,7 @@ Hope the exercise can serve as a template for building other pipelines that invo
 
 ![Multiple_pipeline_coomponents](multiple_pipeline_components.png)
 
-### Containerize the DL source code
+### Containerize your subject-specific DL source code
 
 Place the pytorch scripts in a suitable environment as per the directory layout below.
 ```
@@ -38,6 +38,16 @@ EOF
 
 docker build -t snpsuen/call_train_lib:02 .
 ```
+
+### Define Trainjob and Trainingruntime CRDs
+
+Refer to the following manifests in this repo directory for the TrainJob and TrainingRuntime CRDs defined to serve the corresponding train jobs in the pipeline.
+1. load_data_job.yaml
+2. prepare_data_job.yaml
+3. train_model_job.yaml
+4. model_forecast.yaml
+
+All train jobs are eventually implemented by job pods that share the same docker image but run with different entry point commands.
 
 
 
