@@ -50,34 +50,46 @@ Refer to the following manifests in this repo directory for the TrainJob and Tra
 All train jobs are eventually implemented by job pods that share the same docker image but run with different entry point commands.
 
 <table>
-	<thead>
-		<tr>
-			<th scope="col" align="left">Manifest</th>
-			<th scope="col" align="left">TrainJob CRD</th>
-			<th scope="col" align="left">TrainingRuntime CRD</th>
-			<th scope="col" align="left">Job pod</th>
-			<th scope="col" align="left">Docker Image</th>
-			<th scope="col" align="left">Entry Point Command</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td align="left">load_data_job.yaml</td>
-			<td align="left">load-data-job</td>
-			<td align="left">load-data-runtime</td>
-			<td align="left">load-data-pod</td>
-			<td align="left">snpsuen/call_train_lib:02</td>
-			<td align="left">python ./call_load_data.py</td>			
-		</tr>
+	<tr>
+		<th scope="col" align="left">Manifest</th>
+		<th scope="col" align="left">TrainJob CRD</th>
+		<th scope="col" align="left">TrainingRuntime CRD</th>
+		<th scope="col" align="left">Job pod</th>
+		<th scope="col" align="left">Docker Image</th>
+		<th scope="col" align="left">Entry Point Command</th>
+	</tr>
+	<tr>
+		<td align="left">load_data_job.yaml</td>
+		<td align="left">load-data-job</td>
+		<td align="left">load-data-runtime</td>
+		<td align="left">load-data-pod</td>
+		<td align="left">snpsuen/call_train_lib:02</td>
+		<td align="left">python ./call_load_data.py</td>			
+	</tr>
+	<tr>
+		<td align="left">prepare_data_job.yaml</td>
+		<td align="left">prepare-data-job</td>
+		<td align="left">prepare-data-runtime</td>
+		<td align="left">load-data-pod</td>
+		<td align="left">snpsuen/call_train_lib:02</td>
+		<td align="left">python ./call_prepare_data.py</td>
+	</tr>
 
-		<tr>
-			<td align="left">prepare_data_job.yaml</td>
-			<td align="left">prepare-data-job</td>
-			<td align="left">prepare-data-runtime</td>
-			<td align="left">load-data-pod</td>
-			<td align="left">snpsuen/call_train_lib:02</td>
-			<td align="left">python ./call_prepare_data.py</td>
-		</tr>
-  
-	</tbody>
+	<tr>
+		<td align="left">train_model_job.yaml</td>
+		<td align="left">train-model-job</td>
+		<td align="left">train-model-runtime</td>
+		<td align="left">train-model-pod</td>
+		<td align="left">snpsuen/call_train_lib:02</td>
+		<td align="left">python ./call_train_model.py</td>
+	</tr>
+			
+	<tr>
+		<td align="left">model_forecast_job.yaml</td>
+		<td align="left">model-forecast-job</td>
+		<td align="left">model-forecast-runtime</td>
+		<td align="left">model-forecast-pod</td>
+		<td align="left">snpsuen/call_train_lib:02</td>
+		<td align="left">python ./call_model_forecast.py</td>
+	</tr>
 </table>
