@@ -53,7 +53,7 @@ All train jobs are eventually implemented by job pods that share the same docker
 	<thead>
 		<tr>
 			<th scope="col" align="left">Manifest</th>
-			<th scope="col" align="left"TrainJob CRD</th>
+			<th scope="col" align="left">TrainJob CRD</th>
 			<th scope="col" align="left">TrainingRuntime CRD</th>
 			<th scope="col" align="left">Docker Image</th>
       <th scope="col" align="left">Job pod</th>
