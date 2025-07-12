@@ -25,7 +25,7 @@ workspace/
 └── call_model_forecast.py
 ```
 
-Package the scripts into a docker image, which will be used to spin up the train job worker pods. In this example, the image is tagged snpsuen/call_train_lib:02,
+Package the scripts into a docker image, which will be used to spin up the train job worker pods. The entry point command specified here is only a filler and tends to be overrided by those invoked for the specific train jobs. In this example, the image is tagged snpsuen/call_train_lib:02.
 ```
 cat > Dockerfile <<EOF
 FROM python:3.13.5-slim-bookworm
