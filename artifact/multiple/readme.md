@@ -69,32 +69,5 @@ All train jobs are eventually implemented by job pods that share the same docker
 			<td align="left">snpsuen/call_train_lib:02</td>
 			<td align="left">python ./call_load_data.py</td>			
 		</tr>
-
-                <tr>
-			<td align="left">prepare_data_job.yaml</td>
-			<td align="left">prepare-data-job</td>
-			<td align="left">prepare-data-runtime</td>
-			<td align="left">load-data-pod</td>
-			<td align="left">snpsuen/call_train_lib:02</td>
-			<td align="left">python ./call_prepare_data.py</td>
-		</tr>
-
-		<tr>
-			<td align="left">train_model_job.yaml</td>
-			<td align="left">train-model-job</td>
-			<td align="left">train-model-runtime</td>
-			<td align="left">train-model-pod</td>
-			<td align="left">snpsuen/call_train_lib:02</td>
-			<td align="left">python ./call_train_model.py</td>
-		</tr>
-                
-		<tr>
-			<td align="left">model_forecast_job.yaml</td>
-			<td align="left">model-forecast-job</td>
-			<td align="left">model-forecast-runtime</td>
-			<td align="left">model-forecast-pod</td>
-			<td align="left">snpsuen/call_train_lib:02</td>
-			<td align="left">python ./call_model_forecast.py</td>
-		</tr>
 	</tbody>
 </table>
