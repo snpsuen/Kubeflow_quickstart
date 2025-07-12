@@ -6,8 +6,15 @@ A more realistic approach is to break down a monolithic pipeline into a workflow
 3. Train up a DL model
 4. Use the model to forecast
 
-Hope the exercise can serve as a template to implement other pipelines that run through similar stages. 
+Hope the exercise can serve as a template for building other pipelines that involve similar train jobs. 
 
 ### TL; DR
 
 ![Multiple_pipeline_coomponents](multiple_pipeline_components.png)
+
+### Package the Pytorch scripts in a docker image.
+
+
+
+
+
