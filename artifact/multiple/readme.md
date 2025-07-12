@@ -48,7 +48,6 @@ Refer to the following manifests in this repo directory for the TrainJob and Tra
 4. model_forecast.yaml
 
 All train jobs are eventually implemented by job pods that share the same docker image but run with different entry point commands.
-
 <table>
 	<tr>
 		<th scope="col" align="left">Manifest</th>
@@ -70,11 +69,10 @@ All train jobs are eventually implemented by job pods that share the same docker
 		<td align="left">prepare_data_job.yaml</td>
 		<td align="left">prepare-data-job</td>
 		<td align="left">prepare-data-runtime</td>
-		<td align="left">load-data-pod</td>
+		<td align="left">prepare-data-pod</td>
 		<td align="left">snpsuen/call_train_lib:02</td>
 		<td align="left">python ./call_prepare_data.py</td>
 	</tr>
-
 	<tr>
 		<td align="left">train_model_job.yaml</td>
 		<td align="left">train-model-job</td>
@@ -83,7 +81,6 @@ All train jobs are eventually implemented by job pods that share the same docker
 		<td align="left">snpsuen/call_train_lib:02</td>
 		<td align="left">python ./call_train_model.py</td>
 	</tr>
-			
 	<tr>
 		<td align="left">model_forecast_job.yaml</td>
 		<td align="left">model-forecast-job</td>
