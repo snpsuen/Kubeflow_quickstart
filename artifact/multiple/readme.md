@@ -10,4 +10,4 @@ Hope the exercise can serve as a template to implement other pipelines that run 
 
 ### TL; DR
 
-![Multiple_pipeline_coomponents](multiple_pipeline_coomponents.png)
+![Multiple_pipeline_coomponents](multiple_pipeline_components.png)
