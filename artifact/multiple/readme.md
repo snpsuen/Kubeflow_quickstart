@@ -49,7 +49,28 @@ Refer to the following manifests in this repo directory for the TrainJob and Tra
 
 All train jobs are eventually implemented by job pods that share the same docker image but run with different entry point commands.
 
-
+<table>
+	<thead>
+		<tr>
+			<th scope="col" align="left">Manifest</th>
+			<th scope="col" align="left"TrainJob CRD</th>
+			<th scope="col" align="left">TrainingRuntime CRD</th>
+			<th scope="col" align="left">Docker Image</th>
+      <th scope="col" align="left">Job pod</th>
+			<th scope="col" align="left">Entry Point Command</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td align="left">load_data_job.yaml</td>
+			<td align="left">koad-data-job</td>
+			<td align="left">koad-data-runtime</td>
+			<td align="left">snpsuen/call_train_lib:02</td>
+      <td align="left">load-data-pod</td>
+			<td align="left">python ./call_load_data.py</td>			
+		</tr>
+	</tbody>
+</table>
 
 
 
