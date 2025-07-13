@@ -195,7 +195,6 @@ model-forecast-job   Complete   3h20m
 prepare-data-job     Complete   3h23m
 train-model-job      Complete   3h22m
 ```
-```
 
 The train jobs are served by the following worker pods that do the actual work of running the subject-specific DL scripts.
 ```
