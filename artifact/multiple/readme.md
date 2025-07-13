@@ -206,7 +206,7 @@ prepare-data-job-prepare-data-rj-0-0-h2zjs       0/1     Completed   0          
 train-model-job-train-model-rj-0-0-dbrpk         0/1     Completed   0          3h9m
 ```
 
-Finally, check out the pod logs for the expected results from the scripts.
+Finally, check out the pod logs to view the expected results from the scripts.
 ```
 keyuser@ubunclone:~$ kubectl -n training logs load-data-job-load-data-rj-0-0-lh974
 (1) Reading CSV source ...
