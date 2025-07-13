@@ -1,4 +1,4 @@
-## Pipeline for multiple train jobs
+## Pipeline for running multiple train jobs
 
 A more realistic approach is to break down a monolithic pipeline into a workflow of multiple train jobs. To start with, let's consider a ML life cycle that is typically driven by the following pipeline components in order.
 1. Load raw data
@@ -156,4 +156,4 @@ Now we can move on to the next step of running the pipeline on Kubeflow Pipeline
 
 Upload the pipeline yaml, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml), via the UI to Kubeflow Pipelines.
 
-
+![pipeline_20250711_01_screen01](pipeline_20250711_01_screen01.PNG)
