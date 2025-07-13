@@ -148,4 +148,12 @@ command = "kubectl -n training get trainjob load-data-job -o=jsonpath='{.status.
 while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
 	time.sleep(1)
 ```
-Finally, run python on the script to compile it into a yaml file, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml), Now we can move on to the next step of running the pipeline on Kubeflow Pipelines.
+Finally, run python on the script to compile it into a yaml file, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml).
+
+Now we can move on to the next step of running the pipeline on Kubeflow Pipelines.
+
+### Try it out on Kubeflow Pipelines
+
+Upload the pipeline yaml, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml), via the UI to Kubeflow Pipelines.
+
+
