@@ -99,5 +99,5 @@ This rather ugly approach can be refined by using an NFS volume to share data be
 
 ### Set up a Kubeflow pipeline
 
-We proceed to set up a Kubeflow pipeline based on the KFP script, (poly_trainjobs_pipeline.py)[./poly_trainjobs_pipeline.py]. in short, the pipeline is made up four components that 
+We proceed to set up a Kubeflow pipeline based on the KFP script, (poly_trainjobs_pipeline.py)[artifact/multiple/poly_trainjobs_pipeline.py]. in short, the pipeline is made up four components that 
 
