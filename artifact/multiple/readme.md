@@ -93,6 +93,11 @@ All train jobs are eventually implemented by job pods that share the same docker
 
 To facilitate passage of data from one job pod to another, pytorch objects returned by a pod, mostly in the form of various data sets or models, are written to a file system via torch.save(). They are subsequently fed into the receving pod using torch.load().
 
-We go for a quick and dirty option whereby a designated hostpath volume, /var/tmp/pytorch, is shared by the job pods via the container mount point /pytorch. To ensure the pods being pinned to the same hostpath volume instance throughout the pipeline, we schedule them explicitly to run on the same Kubernetes node by hardcoding the nodename field of the pod template, namely template.spec.nodename. 
+We go for a quick and dirty option whereby a designated hostpath volume, /var/tmp/pytorch, is shared by the job pods via the container mount point /pytorch. To ensure all the pods will access the same copy of the hostpath volume throughout the pipeline, we schedule them explicitly to run on the same Kubernetes node by hardcoding the nodename field of the pod template, namely template.spec.nodename. 
 
-This rather ugly approach can be refined by using an NFS We will leave it to our later work to refine the approach by setting up the job pods to share an NFS volume.
+This rather ugly approach can be refined by using an NFS volume to share data between the job pods. We will leave it to later discussion.
+
+### Set up a Kubeflow pipeline
+
+We proceed to set up a Kubeflow pipeline based on the KFP script, (poly_trainjobs_pipeline.py)[./poly_trainjobs_pipeline.py]. in short, the pipeline is made up four components that 
+
