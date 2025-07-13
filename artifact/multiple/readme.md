@@ -197,4 +197,89 @@ train-model-job      Complete   3h22m
 ```
 ```
 
-Finally, the train jobs are served by the following worker pods 
+The train jobs are served by the following worker pods that do the actual work of running the subject-specific DL scripts.
+```
+keyuser@ubunclone:~$ kubectl -n training get pods
+NAME                                             READY   STATUS      RESTARTS   AGE
+load-data-job-load-data-rj-0-0-lh974             0/1     Completed   0          3h12m
+model-forecast-job-model-forecast-rj-0-0-rqxrf   0/1     Completed   0          3h7m
+prepare-data-job-prepare-data-rj-0-0-h2zjs       0/1     Completed   0          3h10m
+train-model-job-train-model-rj-0-0-dbrpk         0/1     Completed   0          3h9m
+```
+
+Finally, check out the pod logs for the expected results from the scripts.
+```
+keyuser@ubunclone:~$ kubectl -n training logs load-data-job-load-data-rj-0-0-lh974
+(1) Reading CSV source ...
+
+Type of df =  <class 'pandas.core.frame.DataFrame'>
+df.shape =  (144, 2)
+Type of timeseries =  <class 'numpy.ndarray'>
+timeseries.shape =  (144, 1)
+Type of train =  <class 'numpy.ndarray'>
+train.shape =  (100, 1)
+Type of test =  <class 'numpy.ndarray'>
+test.shape =  (44, 1)
+Type of forecast =  <class 'numpy.ndarray'>
+forecast.shape =  (4, 1)
+Saving train data to /pytorch/train.pt ...
+Saving test data to /pytorch/test.pt ...
+Saving forecast data to /pytorch/forecast.pt ...
+keyuser@ubunclone:~$
+
+keyuser@ubunclone:~$ kubectl -n training logs prepare-data-job-prepare-data-rj-0-0-h2zjs
+loading train data from /pytorch/train.pt ...
+loading test data from /pytorch/test.pt ...
+loading forecast data from /pytorch/forecast.pt ...
+(2) Preparing training data ...
+
+Type of X_train, type of y_train =  <class 'torch.Tensor'> <class 'torch.Tensor'>
+X_train.shape(samples, timesteps, features), y_train.shape(samples, features) =  torch.Size([96, 4, 1]) torch.Size([96, 1])
+Type of X_test, type of y_test =  <class 'torch.Tensor'> <class 'torch.Tensor'>
+X_test.shape(samples, timesteps, features), y_test.shape(samples, features) =  torch.Size([40, 4, 1]) torch.Size([40, 1])
+Type of X_forecast =  <class 'torch.Tensor'>
+X_forecast.shape(samples, timesteps, features) =  torch.Size([1, 4, 1])
+Saving X_train data to /pytorch/X_train.pt ...
+Saving y_train data to /pytorch/y_train.pt ...
+Saving X_test data to /pytorch/X_test.pt ...
+Saving y_test data to /pytorch/y_test.pt ...
+Saving X_forecast data to /pytorch/X_forecast.pt ...
+keyuser@ubunclone:~$
+
+keyuser@ubunclone:~$ kubectl -n training logs train-model-job-train-model-rj-0-0-dbrpk
+(3) Creating training model ...
+
+loading X_train data from /pytorch/X_train.pt ...
+loading y_train data from /pytorch/y_train.pt ...
+loading X_test data from /pytorch/X_test.pt ...
+loading y_test data from /pytorch/y_test.pt ...
+(4) Training and evaluating the model ...
+
+Epoch 0: train RMSE 233.6494, test RMSE 427.5275
+Epoch 10: train RMSE 225.7769, test RMSE 419.3704
+Epoch 20: train RMSE 218.8507, test RMSE 412.1515
+Epoch 30: train RMSE 213.2877, test RMSE 406.3551
+Epoch 40: train RMSE 208.0894, test RMSE 400.9236
+Epoch 50: train RMSE 203.0791, test RMSE 395.6733
+Epoch 60: train RMSE 198.2084, test RMSE 390.5540
+Epoch 70: train RMSE 193.4573, test RMSE 385.5443
+Epoch 80: train RMSE 188.7998, test RMSE 380.6164
+Epoch 90: train RMSE 184.2362, test RMSE 375.7700
+Saving trained model weight data to /pytorch/trained_weights.pt ...
+keyuser@ubunclone:~$
+
+keyuser@ubunclone:~$ kubectl -n training logs model-forecast-job-model-forecast-rj-0-0-rqxrf
+(3) Creating training model ...
+
+Loading trained model weight data from /pytorch/trained_weights.pt ...
+Loading X_forecast data from /pytorch/X_forecast.pt ...
+(5) Forecasting from the model ...
+
+Forecast input =  tensor([[[508.],
+         [461.],
+         [390.],
+         [432.]]])
+Forecast output =  tensor([[57.4423]])
+Saving y_forecast data to /pytorch/y_forecast.pt ...
+keyuser@ubunclone:~$
+```
