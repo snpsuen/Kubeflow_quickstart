@@ -1,6 +1,6 @@
 ## Pipeline for running multiple train jobs
 
-A more realistic approach is to break down a monolithic pipeline into a workflow of multiple train jobs. To start with, let's consider a ML life cycle that is typically driven by the following pipeline components in order.
+A more realistic approach is to break down a monolithic pipeline into a workflow of multiple train jobs. To start with, let's consider a ML life cycle that is driven typically by the following pipeline components in order.
 1. Load raw data
 2. Slice and dice data sets to prepare for training
 3. Train up a DL model
