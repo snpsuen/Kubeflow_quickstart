@@ -157,3 +157,14 @@ Now we can move on to the next step of running the pipeline on Kubeflow Pipeline
 Upload the pipeline yaml, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml), via the UI to Kubeflow Pipelines.
 
 ![pipeline_20250711_01_screen01](pipeline_20250711_01_screen01.PNG)
+
+![pipeline_20250711_01_screen02](pipeline_20250711_01_screen02.PNG)
+
+Start a run of the pipeline.
+
+![pipeline_20250711_01_screen03](pipeline_20250711_01_screen03.PNG)
+
+![pipeline_20250711_01_screen04](pipeline_20250711_01_screen04.PNG)
+
+Observe the pipeline completed after 6 mins or so.
+
