@@ -42,10 +42,10 @@ docker build -t snpsuen/call_train_lib:02 .
 ### Define Trainjob and Trainingruntime CRDs
 
 Refer to the following manifests in this repo directory for the TrainJob and TrainingRuntime CRDs defined to serve the corresponding train jobs in the pipeline.
-1. load_data_job.yaml
-2. prepare_data_job.yaml
-3. train_model_job.yaml
-4. model_forecast.yaml
+1. [load_data_job.yaml](load_data_job.yaml)
+2. [prepare_data_job.yaml](prepare_data_job.yaml)
+3. [train_model_job.yaml](train_model_job.yaml)
+4. [model_forecast.yaml](model_forecast.yaml)
 
 All train jobs are eventually implemented by job pods that share the same docker image but start with different entry point commands.
 <table>
@@ -53,7 +53,7 @@ All train jobs are eventually implemented by job pods that share the same docker
 		<th scope="col" align="left">Manifest</th>
 		<th scope="col" align="left">TrainJob CRD</th>
 		<th scope="col" align="left">TrainingRuntime CRD</th>
-		<th scope="col" align="left">Job pod</th>
+		<th scope="col" align="left">Job Pod</th>
 		<th scope="col" align="left">Docker Image</th>
 		<th scope="col" align="left">Entry Point Command</th>
 	</tr>
@@ -99,5 +99,34 @@ This rather ugly approach can be refined by using an NFS volume to share data be
 
 ### Set up a Kubeflow pipeline
 
-We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjobs_pipeline.py](poly_trainjobs_pipeline.py). in short, the pipeline is made up four components that 
+We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjobs_pipeline.py](poly_trainjobs_pipeline.py). As expected, there are four pipeline components in total and each will run as a pod from the same docker image where kubectl is invoked to create the desirable TrainJob and TrainingRuntime CRDs.
+
+<table>
+	<tr>
+		<th scope="col" align="left">Pipeline Component</th>
+		<th scope="col" align="left">Docker Image</th>
+		<th scope="col" align="left">kubectl Command</th>
+	</tr>
+	<tr>
+		<td align="left">launch_load_data_trainjob</td>
+		<td align="left">snpsuen/python-3.10-kubectl:v01</td>
+		<td align="left">kubectl apply -f load_data_job.yaml</td>			
+	</tr>
+	<tr>
+		<td align="left">launch_prepare_data_trainjob</td>
+		<td align="left">snpsuen/python-3.10-kubectl:v01</td>
+		<td align="left">kubectl apply -f prepare_data_job.yaml</td>
+	</tr>
+	<tr>
+		<td align="left">launch_train_model_trainjob</td>
+		<td align="left">snpsuen/python-3.10-kubectl:v01</td>
+		<td align="left">kubectl apply -f train_model_job.yaml</td>
+	</tr>
+	<tr>
+		<td align="left">launch_model_forecast_trainjob</td>
+		<td align="left">snpsuen/python-3.10-kubectl:v01</td>
+		<td align="left">kubectl apply -f _model_forecast_job.yaml</td>
+	</tr>
+</table>
+
 
