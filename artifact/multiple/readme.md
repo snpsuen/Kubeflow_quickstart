@@ -17,7 +17,7 @@ Hope the exercise can serve as a template for building other pipelines that invo
 Place the pytorch scripts in a suitable environment as per the directory layout below.
 ```
 workspace/
-├── [simple_train_lib.py](workspace/simple_train_lib.py)
+├── simple_train_lib.py
 ├── call_train_lib.py
 ├── call_load_data.py
 ├── call_prepare_data.py
