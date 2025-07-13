@@ -170,5 +170,29 @@ Observe the pipeline completes after 6 mins.
 ![pipeline_20250711_02_screen02](pipeline_20250711_02_screen02.PNG)
 ![pipeline_20250711_02_screen03](pipeline_20250711_02_screen03.PNG)
 
+The train jobs are launched by the following pipeline running pods on the data plane of Kubeflow Pipelines.
+```
+keyuser@ubunclone:~$ kubectl -n kubeflow get pods
+...
+multiple-trainjobs-pipeline-fzfjb-system-container-driver-1654498691   0/2     Completed   0             87m
+multiple-trainjobs-pipeline-fzfjb-system-container-driver-2201144676   0/2     Completed   0             85m
+multiple-trainjobs-pipeline-fzfjb-system-container-driver-3114394      0/2     Completed   0             89m
+multiple-trainjobs-pipeline-fzfjb-system-container-driver-4215877059   0/2     Completed   0             88m
+multiple-trainjobs-pipeline-fzfjb-system-container-impl-1019964485     0/2     Completed   0             86m
+multiple-trainjobs-pipeline-fzfjb-system-container-impl-2087507732     0/2     Completed   0             89m
+multiple-trainjobs-pipeline-fzfjb-system-container-impl-2098615850     0/2     Completed   0             84m
+multiple-trainjobs-pipeline-fzfjb-system-container-impl-2659625605     0/2     Completed   0             87m
+multiple-trainjobs-pipeline-fzfjb-system-dag-driver-1389824855         0/2     Completed   0             89m
+...
+```
 
-
+Here are the TrainJob CRDs created by the pipeline.
+```
+keyuser@ubunclone:~$ kubectl -n training get trainjob
+NAME                 STATE      AGE
+load-data-job        Complete   3h24m
+model-forecast-job   Complete   3h20m
+prepare-data-job     Complete   3h23m
+train-model-job      Complete   3h22m
+```
+```
