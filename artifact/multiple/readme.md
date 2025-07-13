@@ -25,7 +25,7 @@ workspace/
 └── call_model_forecast.py
 ```
 
-Package the scripts into a docker image, which will be used to spin up the train job worker pods. The entry point command specified here is only a filler and tends to be overrided by those invoked for the specific train jobs. In this example, the image is tagged snpsuen/call_train_lib:02.
+Package the scripts into a docker image, which will be used to spin up the train job worker pods. The entry point command specified here is only a filler and will certainly be overrided when a pod is created from the image to perform a specific train job. In this example, the image is tagged snpsuen/call_train_lib:02.
 ```
 cat > Dockerfile <<EOF
 FROM python:3.13.5-slim-bookworm
@@ -91,8 +91,8 @@ All train jobs are eventually implemented by job pods that share the same docker
 	</tr>
 </table>
 
-To facilitate the passage of data from one job pod to another, pytorch objects returned by a pod, mostly in the form of various data sets or models, are written to a file system via torch.save(). They are subsequently fed into the receving pod using torch.load().
+To facilitate passage of data from one job pod to another, pytorch objects returned by a pod, mostly in the form of various data sets or models, are written to a file system via torch.save(). They are subsequently fed into the receving pod using torch.load().
 
-We go for a quick and dirty option whereby a designated hostpath volume, /var/tmp/pytorch, is shared by the job pods via the container mount point /pytorch. To ensure access to the same hostpath volume throughout the pipeline, we schedule all the job pods to run on the same kubernetes node by hardcoding the nodename field of the pod template, namely template.spec.nodename. 
+We go for a quick and dirty option whereby a designated hostpath volume, /var/tmp/pytorch, is shared by the job pods via the container mount point /pytorch. To ensure the pods being pinned to the same hostpath volume instance throughout the pipeline, we schedule them explicitly to run on the same Kubernetes node by hardcoding the nodename field of the pod template, namely template.spec.nodename. 
 
-We will leave it to our later work to refine the approach by setting up the job pods to share an NFS volume.
+This rather ugly approach can be refined by using an NFS We will leave it to our later work to refine the approach by setting up the job pods to share an NFS volume.
