@@ -196,3 +196,5 @@ prepare-data-job     Complete   3h23m
 train-model-job      Complete   3h22m
 ```
 ```
+
+Finally, the train jobs are served by the following worker pods 
