@@ -99,7 +99,7 @@ This rather ugly approach can be refined by using an NFS volume to share data be
 
 ### Set up a Kubeflow pipeline
 
-We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjobs_pipeline.py](poly_trainjobs_pipeline.py). As expected, there are four pipeline components in total and each will run as a pod from the same docker image where kubectl is invoked to create the desirable TrainJob and TrainingRuntime CRDs.
+We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjobs_pipeline.py](poly_trainjobs_pipeline.py). As expected, there are four pipeline components in total and each will run as a pod from the same docker image where kubectl is invoked to create the designated TrainJob and TrainingRuntime CRDs.
 
 <table>
 	<tr>
@@ -129,4 +129,23 @@ We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjob
 	</tr>
 </table>
 
+An important consideration is to establish dependency between the pipeline components so that they will be executed in the desirable order. This is evident from the definition of the pipeline function in the KFP script.
+```
+def poly_trainjobs_pipeline():
+    load_data_task = launch_load_data_trainjob()
+    prepare_data_task = launch_prepare_data_trainjob()
+    train_model_task = launch_train_model_trainjob()
+    model_forecast_task = launch_model_forecast_trainjob()
 
+    prepare_data_task.after(load_data_task)
+    train_model_task.after(prepare_data_task)
+    model_forecast_task.after(train_model_task)
+```
+
+In this regard, a pipeline component is ready to pass the floor to the following component only after the TrainJob CRD it created is observed to have reached the Complete status. For example, prepare_data_task will wait for load-data-job to complete before kicking in.
+```
+command = "kubectl -n training get trainjob load-data-job -o=jsonpath='{.status.conditions[*].type}'"
+while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
+	time.sleep(1)
+```
+Finally, run python on the script to compile it into a yaml file, [poly_trainjobs_pipeline.yaml](poly_trainjobs_pipeline.yaml), for submission to Kubeflow Pipelines.
