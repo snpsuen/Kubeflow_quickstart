@@ -125,7 +125,7 @@ We proceed to set up a Kubeflow pipeline based on the KFP script, [poly_trainjob
 	<tr>
 		<td align="left">launch_model_forecast_trainjob</td>
 		<td align="left">snpsuen/python-3.10-kubectl:v01</td>
-		<td align="left">kubectl apply -f _model_forecast_job.yaml</td>
+		<td align="left">kubectl apply -f model_forecast_job.yaml</td>
 	</tr>
 </table>
 
