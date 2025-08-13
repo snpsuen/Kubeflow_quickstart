@@ -222,4 +222,5 @@ def generative_prompt(model, stoi, itos, max_new = 50):
         out = model.generate(context, max_new)[0]
         result = decode(out.tolist())
         # print("\nGPT Replying >", result[len(prompt.split()):])
-		print("\nGPT replying >", result[len(prompt):])
+        print("\nGPT replying >", result[len(prompt):])
+
