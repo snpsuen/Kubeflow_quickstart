@@ -202,7 +202,7 @@ def generative_prompt(model, stoi, itos, max_new = 50):
     device = main_config["device"]
     encode = lambda s: [stoi[w] for w in re.findall(r"\b\w+\b|[^\w\s]", s) if w in stoi]
     decode = lambda idxs: ' '.join([itos[i] for i in idxs])
-	
+
     print("\nToy GPT Interactive Mode (word-level) — type 'exit' to quit.")
     while True:
         prompt = input("\nGPT prompt > ").strip()
@@ -223,4 +223,3 @@ def generative_prompt(model, stoi, itos, max_new = 50):
         result = decode(out.tolist())
         # print("\nGPT Replying >", result[len(prompt.split()):])
         print("\nGPT replying >", result[len(prompt):])
-
