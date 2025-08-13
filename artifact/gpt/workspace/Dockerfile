@@ -4,4 +4,3 @@ RUN apt-get update && apt-get install -y wget nano procps
 WORKDIR /workspace
 COPY . .
 CMD [ "python", "./call_toy_gpt_lib.py"]
-EOF
