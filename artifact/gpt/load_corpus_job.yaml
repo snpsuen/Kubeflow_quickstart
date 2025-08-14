@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gpt-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 128Mi
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: load-corpus-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: load-corpus-runtime
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: load-corpus-rj
+          template:
+            metadata:
+              name: load-corpus-rj
+              namespace: training
+            spec:
+              parallelism: 1
+              template:
+                metadata: 
+                  name: load-corpus-pod
+                  namespace: training
+                spec:
+                  containers:
+                    - image: snpsuen/toy-gpt:latest
+                      imagePullPolicy: IfNotPresent
+                      name: load-corpus-container
+                      command: ["python", "/workspace/call_load_corpus.py"]
+                      volumeMounts:
+                        - name: gpt-vol
+                          mountPath: /gpt
+                  volumes:
+                    - name: gpt-vol
+                      persistentVolumeClaim:
+                        claimName: gpt-pvc
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: load-corpus-job
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: load-corpus-runtime
