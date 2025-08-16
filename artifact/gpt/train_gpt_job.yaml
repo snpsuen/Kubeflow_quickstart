@@ -1,0 +1,46 @@
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainingRuntime
+metadata:
+  name: train-gpt-runtime
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  template:
+    metadata:
+      name: train-gpt-runtime
+      namespace: training
+    spec:
+      replicatedJobs:
+        - name: train-gpt-rj
+          template:
+            metadata:
+              name: train-gpt-rj
+              namespace: training
+            spec:
+              parallelism: 1
+              template:
+                metadata: 
+                  name: train-gpt-pod
+                  namespace: training
+                spec:
+                  containers:
+                  - name: train-gpt-container
+                    image: snpsuen/toy-gpt:latest
+                    imagePullPolicy: IfNotPresent
+                    command: ["python", "/workspace/call_train_gpt.py"]
+                    volumeMounts:
+                    - name: gpt-vol
+                      mountPath: /gpt
+                  volumes:
+                  - name: gpt-vol
+                    persistentVolumeClaim:
+                      claimName: gpt-pvc
+---
+apiVersion: trainer.kubeflow.org/v1alpha1
+kind: TrainJob
+metadata:
+  name: train-gpt-job
+  namespace: training # Or the namespace where your runtime will live
+spec:
+  runtimeRef:
+    kind: TrainingRuntime
+    name: train-gpt-runtime
