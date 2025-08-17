@@ -1,0 +1,144 @@
+# PIPELINE DEFINITION
+# Name: gpt-trainjobs-pipeline
+# Description: A pipeline to launch gpt train jobs using components
+components:
+  comp-launch-generative-prompt-trainjob:
+    executorLabel: exec-launch-generative-prompt-trainjob
+  comp-launch-load-corpus-trainjob:
+    executorLabel: exec-launch-load-corpus-trainjob
+  comp-launch-train-gpt-trainjob:
+    executorLabel: exec-launch-train-gpt-trainjob
+deploymentSpec:
+  executors:
+    exec-launch-generative-prompt-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_generative_prompt_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.14.2'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_generative_prompt_trainjob():\n    import subprocess\n\
+          \    import time\n    subprocess.run([\n        \"kubectl\", \"apply\",\
+          \ \"-f\",\n        \"kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/generative_prompt_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob generative-prompt-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+    exec-launch-load-corpus-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_load_corpus_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.14.2'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_load_corpus_trainjob():\n    import subprocess\n    import\
+          \ time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n\
+          \        \"kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/load_corpus_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob load-corpus-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+    exec-launch-train-gpt-trainjob:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - launch_train_gpt_trainjob
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.14.2'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef launch_train_gpt_trainjob():\n    import subprocess\n    import\
+          \ time\n    subprocess.run([\n        \"kubectl\", \"apply\", \"-f\",\n\
+          \        \"kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/train_gpt_job.yaml\"\
+          \n    ], check=True)\n    command = \"kubectl -n training get trainjob train-gpt-job\
+          \ -o=jsonpath='{.status.conditions[*].type}'\"\n    while (subprocess.check_output(command,\
+          \ shell=True, text=True) != \"Complete\"):\n        time.sleep(1)\n\n"
+        image: snpsuen/python-3.10-kubectl:v01
+pipelineInfo:
+  description: A pipeline to launch gpt train jobs using components
+  name: gpt-trainjobs-pipeline
+root:
+  dag:
+    tasks:
+      launch-generative-prompt-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-generative-prompt-trainjob
+        dependentTasks:
+        - launch-train-gpt-trainjob
+        taskInfo:
+          name: launch-generative-prompt-trainjob
+      launch-load-corpus-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-load-corpus-trainjob
+        taskInfo:
+          name: launch-load-corpus-trainjob
+      launch-train-gpt-trainjob:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-launch-train-gpt-trainjob
+        dependentTasks:
+        - launch-load-corpus-trainjob
+        taskInfo:
+          name: launch-train-gpt-trainjob
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.14.2
