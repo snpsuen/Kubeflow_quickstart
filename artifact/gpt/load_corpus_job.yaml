@@ -1,16 +1,3 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: gpt-pvc
-  namespace: training
-spec:
-  accessModes:
-    - ReadWriteOnce
-  # storageClassName: standard
-  resources:
-    requests:
-      storage: 128Mi
----
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainingRuntime
 metadata:
