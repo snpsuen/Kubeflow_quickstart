@@ -6,10 +6,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: standard
   resources:
     requests:
-      storage: 10Mi
+      storage: 128Mi
 ---
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainingRuntime
