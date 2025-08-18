@@ -9,7 +9,7 @@ spec:
   storageClassName: local-path
   resources:
     requests:
-      storage: 128Mi
+      storage: 10Mi
 ---
 apiVersion: trainer.kubeflow.org/v1alpha1
 kind: TrainingRuntime
