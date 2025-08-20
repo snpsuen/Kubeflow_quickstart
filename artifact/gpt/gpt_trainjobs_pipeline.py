@@ -7,7 +7,7 @@ def launch_load_corpus_trainjob():
     import time
     subprocess.run([
         "kubectl", "apply", "-f",
-        "kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/load_corpus_job.yaml"
+        "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/load_corpus_job.yaml"
     ], check=True)
     command = "kubectl -n training get trainjob load-corpus-job -o=jsonpath='{.status.conditions[*].type}'"
     while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
@@ -19,7 +19,7 @@ def launch_train_gpt_trainjob():
     import time
     subprocess.run([
         "kubectl", "apply", "-f",
-        "kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/train_gpt_job.yaml"
+        "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/train_gpt_job.yaml"
     ], check=True)
     command = "kubectl -n training get trainjob train-gpt-job -o=jsonpath='{.status.conditions[*].type}'"
     while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
@@ -31,7 +31,7 @@ def launch_generative_prompt_trainjob():
     import time
     subprocess.run([
         "kubectl", "apply", "-f",
-        "kubectl apply -f https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/generative_prompt_job.yaml"
+        "https://raw.githubusercontent.com/snpsuen/Kubeflow_quickstart/refs/heads/main/artifact/gpt/generative_prompt_job.yaml"
     ], check=True)
     command = "kubectl -n training get trainjob generative-prompt-job -o=jsonpath='{.status.conditions[*].type}'"
     while (subprocess.check_output(command, shell=True, text=True) != "Complete"):
