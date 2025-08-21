@@ -8,3 +8,6 @@ A Kubeflow pipeline is implemented to train up a toy GPT model and use it to gen
 ### TL; DR
 
 ![GPT_Trainjobs_Pipeline](gpt_trainjobs_pipeline_20250820.png)
+
+### Deployment Overview
+
