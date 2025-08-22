@@ -9,5 +9,6 @@ A Kubeflow pipeline is implemented to train up a toy GPT model and use it to gen
 
 ![GPT_Trainjobs_Pipeline](gpt_trainjobs_pipeline_20250820.png)
 
-### Deployment Overview
+### Setup Overview
 
+The steps and artifacts taken to build and run the build the pipelines are similar those used in our earlier example of a pipeline of multiple train jobs (see [here](../multiple/readme.md)).
