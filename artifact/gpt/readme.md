@@ -62,5 +62,25 @@ Upload the GPT pipeline manifest, gpt_trainjobs_pipeline.yaml, to the Kubeflow p
 
 Wait for the generative prompt task to start at the end of the pipeline after the completon of the tasks of loading corpus data and training the GPT model.
 
-![gpt_pipeline_20250819_screen01.png](gpt_trainjobs_pipeline_20250820.png)
+![gpt_pipeline_20250819_screen01.png](ggpt_pipeline_20250819_screen01.png)
 
+Check the generative prompt trainjob is running.
+```
+keyuser@ubunclone:~$ kubectl -n training get trainjob
+NAME                    STATE      AGE
+generative-prompt-job              2m42s
+load-corpus-job         Complete   13m
+train-gpt-job           Complete   9m12s
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ kubectl -n training get job
+NAME                                           STATUS     COMPLETIONS   DURATION   AGE
+generative-prompt-job-generative-prompt-rj-0   Running    0/1           2m47s      2m47s
+load-corpus-job-load-corpus-rj-0               Complete   1/1           2m43s      13m
+train-gpt-job-train-gpt-rj-0                   Complete   1/1           5m25s      9m17s
+keyuser@ubunclone:~$ kubectl -n training get pod
+NAME                                                   READY   STATUS      RESTARTS   AGE
+generative-prompt-job-generative-prompt-rj-0-0-bwbpm   1/1     Running     0          2m36s
+load-corpus-job-load-corpus-rj-0-0-zfvgv               0/1     Completed   0          12m
+train-gpt-job-train-gpt-rj-0-0-562fv                   0/1     Completed   0          9m6s
+keyuser@ubunclone:~$
+```
