@@ -113,3 +113,8 @@ GPT replying > y what Project liability is , and Though up ’ carries the works
 GPT prompt > exit
 Goodbye!
 ```
+
+Upon exit from the prompt session, observe that the pipeline completed sucessfully.
+![gpt_pipeline_20250819_screen05.png](gpt_pipeline_20250819_screen05.png)
+![gpt_pipeline_20250819_screen06.png](gpt_pipeline_20250819_screen06.png)
+
