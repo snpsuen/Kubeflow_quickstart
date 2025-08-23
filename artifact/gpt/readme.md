@@ -115,6 +115,104 @@ Goodbye!
 ```
 
 Upon exit from the prompt session, observe that the pipeline completed sucessfully.
+
 ![gpt_pipeline_20250819_screen05.png](gpt_pipeline_20250819_screen05.png)
+
 ![gpt_pipeline_20250819_screen06.png](gpt_pipeline_20250819_screen06.png)
 
+Inspect the ouput logs from all the GPT pipeline components.
+```
+keyuser@ubunclone:~$ kubectl -n training get pods
+NAME                                                   READY   STATUS      RESTARTS   AGE
+generative-prompt-job-generative-prompt-rj-0-0-bwbpm   0/1     Completed   0          15m
+load-corpus-job-load-corpus-rj-0-0-zfvgv               0/1     Completed   0          25m
+train-gpt-job-train-gpt-rj-0-0-562fv                   0/1     Completed   0          21m
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ kubectl -n training logs load-corpus-job-load-corpus-rj-0-0-zfvgv
+--2025-08-19 21:28:37--  https://www.gutenberg.org/cache/epub/1504/pg1504.txt
+Resolving www.gutenberg.org (www.gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 112361 (110K) [text/plain]
+Saving to: ‘corpus.txt’
+
+     0K .......... .......... .......... .......... .......... 45%  435K 0s
+    50K .......... .......... .......... .......... .......... 91%  622K 0s
+   100K .........                                             100% 2.69M=0.2s
+
+2025-08-19 21:28:38 (552 KB/s) - ‘corpus.txt’ saved [112361/112361]
+
+(1) Reading text source ...
+
+type(words) = <class 'list'>
+Vocab size (word-level): 3389
+type(encode(text)) = <class 'list'>
+type(data) = <class 'torch.Tensor'>
+data.shape = torch.Size([24687])
+Saving data data to /gpt/data.pt ...
+Saving vocab_size data to /gpt/vocab_size.pt ...
+Saving stoi data to /gpt/stoi.pt ...
+Saving itos data to /gpt/itos.pt ...
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ kubectl -n training logs train-gpt-job-train-gpt-rj-0-0-562fv
+loading vocab_size from /gpt/vocab_size.pt ...
+(2) Creating training model ...
+
+loading data from /gpt/data.pt ...
+(3) Training model ...
+
+logits.shape =  torch.Size([16, 64, 3389])
+targets.shape =  torch.Size([16, 64])
+logits.view(-1, vocab_size).shape =  torch.Size([1024, 3389])
+targets.view(-1).shape =  torch.Size([1024])
+Iter 0 | Loss: 8.2667
+Iter 10 | Loss: 7.2855
+Iter 20 | Loss: 6.2765
+Iter 30 | Loss: 5.8969
+Iter 40 | Loss: 6.0151
+Iter 50 | Loss: 5.7745
+Iter 60 | Loss: 5.8223
+Iter 70 | Loss: 5.8406
+Iter 80 | Loss: 5.2865
+Iter 90 | Loss: 5.4856
+Saving trained model weight data to /gpt/trained_weights.pt ...
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ kubectl -n training logs generative-prompt-job-generative-prompt-rj-0-0-bwbpm
+loading vocab_size from /gpt/vocab_size.pt ...
+(2) Creating training model ...
+
+Loading trained model weight data from /gpt/trained_weights.pt ...
+Loading stoi from /gpt/stoi.pt ...
+Loading itos from /gpt/itos.pt ...
+(4) Generating text from prompt ...
+
+
+Toy GPT Interactive Mode (word-level) — type 'exit' to quit.
+
+GPT prompt > Once upon a time,
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [439, 3177, 698, 3074, 7]
+context.shape =  torch.Size([1, 5])
+
+GPT replying > , swamp of Beg sprites ] spent an . If in prevail is to by , sob displeasure will , ruin dined . MERCHANTABILITY is , sir , boat cries me ? sweet is one this is of for , hair with us on me your seen live , highly ,
+
+GPT prompt > A long, long time ago,
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [43, 2074, 7, 2074, 3074, 7]
+context.shape =  torch.Size([1, 6])
+
+GPT replying > ow here had ’ d dost Both OF SYRACUSE madly , OR his much sir why a comfort rate copy , tell ? , and is , this updated for ? Have you thousand mishap we why thou THIS sleep five pay and desert any horse wanting . No me
+
+GPT prompt > Hello, how's it going?
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [7, 1869, 2680, 1954, 1715, 42]
+context.shape =  torch.Size([1, 6])
+
+GPT replying > y what Project liability is , and Though up ’ carries the works I helpless same bought most in the compass indemnify hold Dromio . Nay he doubtfully agreement . If format my MESSENGER the habit Gutenberg have and my visit from she you the almanac indeed of Syracuse Ran
+
+GPT prompt > exit
+Goodbye!
+```
+```
