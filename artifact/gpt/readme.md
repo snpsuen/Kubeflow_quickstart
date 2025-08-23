@@ -21,7 +21,7 @@ There are two points about the Kubeflow Trainer resources that are deployed diff
 
 First, before applying the trainingruntime and trainjob CRDs, it is necessary to set up a persistent volume claim (PVC) in the Kubernetes cluster. This will enable the ensuing trainjob pods to share the training data and model via a mount point of a persistent volume. To this end, a suitable storageclass is required to support the PVC.
 
-You may consider installing the local-path storageclass provided by Rancher, if you don't have a proper one to start with,
+You may consider installing the local-path storageclass provided by Rancher, if you don't have one to start with,
 ```
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}
@@ -57,3 +57,9 @@ spec:
 ```
 
 ### Running the pipeline
+
+Upload the GPT pipeline manifest, gpt_trainjobs_pipeline.yaml, to the Kubeflow pipeline and start a run of the pipeline. Observe the pipeline components run to completion one after another.
+
+Wait for the generative prompt task to start at the end of the pipeline after the completon of the tasks of loading corpus data and training the GPT model.
+
+
