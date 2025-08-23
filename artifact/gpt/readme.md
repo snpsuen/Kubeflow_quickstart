@@ -84,3 +84,32 @@ load-corpus-job-load-corpus-rj-0-0-zfvgv               0/1     Completed   0    
 train-gpt-job-train-gpt-rj-0-0-562fv                   0/1     Completed   0          9m6s
 keyuser@ubunclone:~$
 ```
+
+Attach to the running pod of generative-prompt trainjob. Start an interactive session with the trained GPT model to generate text from user prompts.
+```
+keyuser@ubunclone:~$ kubectl -n training attach -it generative-prompt-job-generative-prompt-rj-0-0-bwbpm
+If you don't see a command prompt, try pressing enter.
+GPT prompt > Once upon a time,
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [439, 3177, 698, 3074, 7]
+context.shape =  torch.Size([1, 5])
+
+GPT replying > , swamp of Beg sprites ] spent an . If in prevail is to by , sob displeasure will , ruin dined . MERCHANTABILITY is , sir , boat cries me ? sweet is one this is of for , hair with us on me your seen live , highly ,
+
+GPT prompt > A long, long time ago,
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [43, 2074, 7, 2074, 3074, 7]
+context.shape =  torch.Size([1, 6])
+
+GPT replying > ow here had ’ d dost Both OF SYRACUSE madly , OR his much sir why a comfort rate copy , tell ? , and is , this updated for ? Have you thousand mishap we why thou THIS sleep five pay and desert any horse wanting . No me
+
+GPT prompt > Hello, how's it going?
+type(encode(prompt)) =  <class 'list'>
+encode(prompt) =  [7, 1869, 2680, 1954, 1715, 42]
+context.shape =  torch.Size([1, 6])
+
+GPT replying > y what Project liability is , and Though up ’ carries the works I helpless same bought most in the compass indemnify hold Dromio . Nay he doubtfully agreement . If format my MESSENGER the habit Gutenberg have and my visit from she you the almanac indeed of Syracuse Ran
+
+GPT prompt > exit
+Goodbye!
+```
