@@ -62,4 +62,5 @@ Upload the GPT pipeline manifest, gpt_trainjobs_pipeline.yaml, to the Kubeflow p
 
 Wait for the generative prompt task to start at the end of the pipeline after the completon of the tasks of loading corpus data and training the GPT model.
 
+![gpt_pipeline_20250819_screen01.png](gpt_trainjobs_pipeline_20250820.png)
 
